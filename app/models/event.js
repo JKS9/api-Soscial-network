@@ -23,6 +23,10 @@ const Schema = new mongoose.Schema({
   members_ids: {
     type: Array,
     default: []
+  },
+  status: {
+    type: String,
+    default: 'Public'
   }
 }, {
   collection: 'events',
