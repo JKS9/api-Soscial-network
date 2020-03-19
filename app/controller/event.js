@@ -13,6 +13,7 @@ class Event {
 
     this.createEvent()
     this.showEvent()
+    this.showEventById()
     this.DeleteEvent()
     this.updateEvent()
   }
@@ -56,14 +57,48 @@ class Event {
   }
 
   showEvent () {
-    this.app.get('/event/show/:id', (req, res) => {
+    this.app.get('/event/show/', (req, res) => {
       try {
-        this.EventModel.findById(req.params.id).then(event => {
-          res.status(200).json(event || {})
+        this.EventModel.find({ status: 'public' }).then(event => {
+          if (!event.length) {
+            res.status(404).json({
+              code: 500,
+              message: 'aucun event trouvés :'
+            })
+          } else {
+            res.status(200).json(event || {})
+          }
         }).catch(err => {
           res.status(500).json({
             code: 500,
             message: err
+          })
+        })
+      } catch (err) {
+        res.status(500).json({
+          code: 500,
+          message: err
+        })
+      }
+    })
+  }
+
+  showEventById () {
+    this.app.get('/event/show/:id', (req, res) => {
+      try {
+        this.EventModel.find({ _id: req.params.id, status: 'public' }).then(event => {
+          if (!event.length) {
+            res.status(404).json({
+              code: 404,
+              message: 'aucun event trouvés :'
+            })
+          } else {
+            res.status(200).json(event)
+          }
+        }).catch(() => {
+          res.status(404).json({
+            code: 404,
+            message: 'aucun event trouvés :'
           })
         })
       } catch (err) {

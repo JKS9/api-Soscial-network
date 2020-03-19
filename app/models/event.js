@@ -12,6 +12,10 @@ const Schema = new mongoose.Schema({
     lat: String,
     long: String
   },
+  image: {
+    type: String,
+    default: 'https://images.lanouvellerepublique.fr/image/upload/t_1020w/f_auto/5b95be27be7744fb5c8b467b.jpg'
+  },
   administrators_ids: {
     type: Array,
     default: []
@@ -23,6 +27,10 @@ const Schema = new mongoose.Schema({
   members_ids: {
     type: Array,
     default: []
+  },
+  groupe_ids: {
+    type: String,
+    default: null
   },
   status: {
     type: String,

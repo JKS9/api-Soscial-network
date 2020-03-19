@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "scripts": {
+    "build": "yarn install && eslint ./app/* ./test/* index.js && yarn start",
+    "start": "eslint ./app/* ./test/* index.js && node index.js",
+    "test": "mocha",
+    "lint": "eslint ./app/* ./test/* index.js"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -25,11 +31,5 @@
     "chai": "4.1.2",
     "chai-http": "4.0.0",
     "mocha": "5.2.0"
-  },
-  "scripts": {
-    "build": "yarn install && eslint ./app/* ./test/* index.js && yarn start",
-    "start": "eslint ./app/* ./test/* index.js && node index.js",
-    "test": "mocha",
-    "lint": "eslint ./app/* ./test/* index.js"
   }
 }
