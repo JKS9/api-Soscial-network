@@ -22,18 +22,12 @@ class Event {
     this.app.post('/event/create/', (req, res) => {
       try {
         const eventModel = this.EventModel(req.body)
+        const administrators = req.body.administrators_ids
 
-        const mergeArray = req.body.administrators_ids.concat(req.body.moderators_ids, req.body.members_ids)
-        const mergeArrayEnd = [...new Set(mergeArray)]
-
-        this.UserModel.find(
-          {_id: {
-            $in: mergeArrayEnd
-          }}
-        ).then(user => {
-          if (user.length === mergeArrayEnd.length) {
-            eventModel.save().then(user => {
-              res.status(200).json(user || {})
+        this.UserModel.find({_id: {$in: administrators}}).then(user => {
+          if (user.length === administrators.length) {
+            eventModel.save().then(event => {
+              res.status(200).json(event || {})
             }).catch(err => {
               res.status(500).json({
                 code: 500,
@@ -43,7 +37,7 @@ class Event {
           } else {
             res.status(404).json({
               code: 404,
-              message: 'User not exist'
+              message: 'imposible de créer un évenement, Administrateur selectionner introuvable'
             })
           }
         })
