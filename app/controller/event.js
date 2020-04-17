@@ -18,10 +18,12 @@ class Event {
     this.addAdministrateur()
 
     this.deleteMenbers()
+    this.deleteModerators()
+    this.deleteAdmin()
     this.DeleteEvent()
 
     this.showEvent()
-    this.showEventById()
+    this.showMyEvent()
 
     this.updateEvent()
   }
@@ -287,6 +289,103 @@ class Event {
     })
   }
 
+  deleteModerators () {
+    this.app.delete('/event/deleteModerators/:idevent', (req, res) => {
+      try {        
+        this.EventModel.findById(req.params.idevent, 'moderators_ids administrators_ids').then(eventModo => {
+          console.log(eventModo)
+          if (eventModo.administrators_ids.some(o => req.body.idsend.includes(o))) {
+            if (!eventModo.moderators_ids.some(o => req.body.moderators_ids.includes(o))) {
+              res.status(400).json({
+                code: 203,
+                message: ' utilisateur introuvable'
+              })
+              return
+            }
+            eventModo.moderators_ids = eventModo.moderators_ids.filter(function (item) {
+              return !req.body.moderators_ids.includes(item)
+            })
+            eventModo.save().then(() => {
+              res.status(200).json(eventModo || {})
+            }).catch(err => {
+              res.status(500).json({
+                code: 300,
+                message: err
+              })
+            })
+          } else {
+            res.status(400).json({
+              code: 203,
+              message: 'vous ne pouvez supprimer ce modérateur'
+            })
+          }
+        }).catch(err => {
+          res.status(500).json({
+            code: 400,
+            message: err
+          })
+        })
+      } catch (err) {
+        res.status(500).json({
+          code: 500,
+          message: err
+        })
+      }
+    })
+  }
+
+  deleteAdmin () {
+    this.app.delete('/event/deleteAdmin/:idevent', (req, res) => {
+      try {        
+        this.EventModel.findById(req.params.idevent, 'administrators_ids').then(eventAdmin => {
+          console.log(eventAdmin)
+          if (eventAdmin.administrators_ids[0] === req.body.idsend) {
+            if (eventAdmin.administrators_ids[0] === req.body.administrators_ids) {
+              res.status(400).json({
+                code: 203,
+                message: 'vous ne pouvez pas supprimer un super admin'
+              })
+              return
+            }
+            if (!eventAdmin.administrators_ids.some(o => req.body.administrators_ids.includes(o))) {
+              res.status(400).json({
+                code: 203,
+                message: ' utilisateur introuvable'
+              })
+              return
+            }
+            eventAdmin.administrators_ids = eventAdmin.administrators_ids.filter(function (item) {
+              return !req.body.administrators_ids.includes(item)
+            })
+            eventAdmin.save().then(() => {
+              res.status(200).json(eventAdmin || {})
+            }).catch(err => {
+              res.status(500).json({
+                code: 300,
+                message: err
+              })
+            })
+          } else {
+            res.status(400).json({
+              code: 203,
+              message: 'vous ne pouvez supprimer cette admin'
+            })
+          }
+        }).catch(err => {
+          res.status(500).json({
+            code: 400,
+            message: err
+          })
+        })
+      } catch (err) {
+        res.status(500).json({
+          code: 500,
+          message: err
+        })
+      }
+    })
+  }
+
   DeleteEvent () {
     this.app.delete('/event/delete/:idevent/user/:iduser', (req, res) => {
       try {
@@ -348,33 +447,6 @@ class Event {
     })
   }
 
-  showEventById () {
-    this.app.get('/event/show/:id', (req, res) => {
-      try {
-        this.EventModel.find({ _id: req.params.id, status: 'public' }).then(event => {
-          if (!event.length) {
-            res.status(404).json({
-              code: 404,
-              message: 'aucun event trouvés :'
-            })
-          } else {
-            res.status(200).json(event)
-          }
-        }).catch(() => {
-          res.status(404).json({
-            code: 404,
-            message: 'aucun event trouvés :'
-          })
-        })
-      } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
-      }
-    })
-  }
-  
   updateEvent () {
     this.app.put('/event/update/:id', (req, res) => {
       try {
