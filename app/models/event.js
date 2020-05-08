@@ -32,6 +32,10 @@ const Schema = new mongoose.Schema({
     type: String,
     default: null
   },
+  conversation_id: {
+    type: String,
+    default: null
+  },
   status: {
     type: String,
     default: 'Public'

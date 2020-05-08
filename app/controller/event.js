@@ -23,7 +23,6 @@ class Event {
     this.DeleteEvent()
 
     this.showEvent()
-    this.showMyEvent()
 
     this.updateEvent()
   }
