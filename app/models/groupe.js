@@ -15,7 +15,10 @@ const Schema = new mongoose.Schema({
     type: Date,
     defaut: new Date()
   },
-  administrators_id: String,
+  administrators_id: {
+    type: Array,
+    default: []
+  },
   moderators_ids: {
     type: Array,
     default: []
@@ -26,14 +29,9 @@ const Schema = new mongoose.Schema({
   },
   autorisation_members: {
     type: String,
-    // 1 = autorisation pour parler et créer des events
-    // 2 = autorisation pour parler mais pas créer d'events
-    // 3 = aucune action possible (ne peut pas parler, ne peut pas créer d'events)
+    // 1 = créer des events
+    // 2 = pas créer d'events
     default: '1'
-  },
-  events_ids: {
-    type: Array,
-    default: []
   },
   conversation_id: {
     type: String,
@@ -41,7 +39,7 @@ const Schema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: 'Privé'
+    default: 'Public'
   }
 }, {
   collection: 'Groupe',
