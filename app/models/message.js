@@ -4,6 +4,9 @@ const Schema = new mongoose.Schema({
   id_conversation: {
     type: String
   },
+  id_user: {
+    type: String
+  },
   message: {
     type: String
   },
