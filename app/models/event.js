@@ -36,6 +36,10 @@ const Schema = new mongoose.Schema({
     type: String,
     default: null
   },
+  album_id: {
+    type: String,
+    default: null
+  },
   status: {
     type: String,
     default: 'Public'
