@@ -152,6 +152,34 @@
 			"name": "events",
 			"item": [
 				{
+					"name": "voir tous les events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/event/show/5e6e62b0d632e6ade838663a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"event",
+								"show",
+								"5e6e62b0d632e6ade838663a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create event",
 					"request": {
 						"method": "POST",
@@ -201,7 +229,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"idsend\": \"5e947e92648674775245960b\",\n\t\"members_ids\": [\"5e94892eb5aa827ee97f1523\"]\n}",
+							"raw": "{\n\t\"idsend\": \"5e5f69ce68a88f2cc3309e6e\",\n\t\"members_ids\": [\"5e947e92648674775245960b\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -238,7 +266,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"idsend\": \"5e5f69ce68a88f2cc3309e6e\",\n\t\"moderators_ids\": [\"5e5ff48f45d6086b0bfdc034\"]\n}",
+							"raw": "{\n\t\"idsend\": \"5e5f69ce68a88f2cc3309e6e\",\n\t\"moderators_ids\": [\"5e94892eb5aa827ee97f1523\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -275,7 +303,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"administrators_ids\": [\"5e5f69cc68a88f2cc3309e6c\"]\n}",
+							"raw": "{\n\t\"idsend\": \"5e5f69ce68a88f2cc3309e6e\",\n\t\"administrators_ids\": [\"5e5ff48f45d6086b0bfdc034\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -299,123 +327,7 @@
 					"response": []
 				},
 				{
-					"name": "delete members",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"idsend\": \"5e5f69ce68a88f2cc3309e6e\",\n\t\"members_ids\": [\"5e947e92648674775245960b\"]\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/event/deleteMenbers/5e947ece648674775245960c",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"event",
-								"deleteMenbers",
-								"5e947ece648674775245960c"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "http://localhost:3000/event/search",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3000/event/show/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"event",
-								"show",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "http://localhost:3000/event/search Copy",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3000/event/show/5e6e62b0d632e6ade838663a",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"event",
-								"show",
-								"5e6e62b0d632e6ade838663a"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "http://localhost:3000/event/delete/5e5ff1800a3cfb66e325157f/user/5e5f694d68a88f2cc3309e6b",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/event/delete/5e5fed90a8c6c8645645d7b6/user/5e5f694d68a88f2cc3309e6b",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"event",
-								"delete",
-								"5e5fed90a8c6c8645645d7b6",
-								"user",
-								"5e5f694d68a88f2cc3309e6b"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "http://localhost:3000/event/update/5e5fed90a8c6c8645645d7b6",
+					"name": "update event",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -452,12 +364,123 @@
 					"response": []
 				},
 				{
-					"name": "http://localhost:3000/event/delete/5e5fed90a8c6c8645645d7b6/user/5e5f694d68a88f2cc3309e6b",
+					"name": "delete members",
 					"request": {
-						"method": "GET",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idsend\": \"5e5ff48f45d6086b0bfdc034\",\n\t\"members_ids\": [\"5e947e92648674775245960b\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/event/deleteMenbers/5e947ece648674775245960c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"event",
+								"deleteMenbers",
+								"5e947ece648674775245960c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete moderateur",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idsend\": \"5e5f69ce68a88f2cc3309e6e\",\n\t\"moderators_ids\": [\"5e94892eb5aa827ee97f1523\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/event/deleteModerators/5e947ece648674775245960c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"event",
+								"deleteModerators",
+								"5e947ece648674775245960c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete Admin",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idsend\": \"5e5f69ce68a88f2cc3309e6e\",\n\t\"administrators_ids\": [\"5e5f69ce68a88f2cc3309e6e\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/event/deleteAdmin/5e947ece648674775245960c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"event",
+								"deleteAdmin",
+								"5e947ece648674775245960c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete event",
+					"request": {
+						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/event/delete/5e5fed90a8c6c8645645d7b6/user/5e5f694d68a88f2cc3309",
+							"raw": "http://localhost:3000/event/delete/5e5fed90a8c6c8645645d7b6/user/5e5f694d68a88f2cc3309e6b",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -468,7 +491,7 @@
 								"delete",
 								"5e5fed90a8c6c8645645d7b6",
 								"user",
-								"5e5f694d68a88f2cc3309"
+								"5e5f694d68a88f2cc3309e6b"
 							]
 						}
 					},
@@ -484,7 +507,23 @@
 					"name": "Create groupe",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"etienne tour\",\n\t\"description\": \"voici un groupe sur paris\",\n\t\"date_start\": \"2020-03-03\",\n\t\"administrators_id\": [\"5e5f694d68a88f2cc3309e6b\"],\n\t\"autorisation_members\": \"2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:3000/groupe/create/",
 							"protocol": "http",
@@ -496,6 +535,534 @@
 								"groupe",
 								"create",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add members",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idsend\": \"5e5f69ce68a88f2cc3309e6e\",\n\t\"members_ids\": [\"5e5f69ce68a88f2cc3309e6d\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/groupe/addMembers/5e9c772810193d37266c04aa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupe",
+								"addMembers",
+								"5e9c772810193d37266c04aa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add moderateurs",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idsend\": \"5e5f69ce68a88f2cc3309e6e\",\n\t\"moderators_ids\": [\"5e5f69ce68a88f2cc3309e6d\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/groupe/addModo/5e9c772810193d37266c04aa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupe",
+								"addModo",
+								"5e9c772810193d37266c04aa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idsend\": \"5e5f69ce68a88f2cc3309e6e\",\n\t\"administrators_id\": [\"5e5ff48f45d6086b0bfdc034\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/groupe/addAdmin/5e9c772810193d37266c04aa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupe",
+								"addAdmin",
+								"5e9c772810193d37266c04aa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete members",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idsend\": \"5e947e92648674775245960b\",\n\t\"members_ids\": [\"5e5f69ce68a88f2cc3309e6d\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/groupe/deleteMenbers/5e9c772810193d37266c04aa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupe",
+								"deleteMenbers",
+								"5e9c772810193d37266c04aa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete moderateur",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idsend\": \"5e5f69ce68a88f2cc3309e6e\",\n\t\"moderators_ids\": [\"5e5f69ce68a88f2cc3309e6d\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/groupe/deleteModerators/5e9c772810193d37266c04aa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupe",
+								"deleteModerators",
+								"5e9c772810193d37266c04aa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete Admin",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idsend\": \"5e5f69ce68a88f2cc3309e6e\",\n\t\"administrators_id\": [\"5e5ff48f45d6086b0bfdc034\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/groupe/deleteAdmin/5e9c772810193d37266c04aa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupe",
+								"deleteAdmin",
+								"5e9c772810193d37266c04aa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete groupe",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/groupe/delete/5e9c772810193d37266c04aa/user/5e5f69ce68a88f2cc3309e6e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupe",
+								"delete",
+								"5e9c772810193d37266c04aa",
+								"user",
+								"5e5f69ce68a88f2cc3309e6e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show groupe public",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/groupe/show/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupe",
+								"show",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show groupe event",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/groupe/show/5e9d7fe80b89f0480498e92d/event",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupe",
+								"show",
+								"5e9d7fe80b89f0480498e92d",
+								"event"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"status\": \"Secret\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/groupe/updateStatus/5eb3eea74fc40f13f0f4cd4c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupe",
+								"updateStatus",
+								"5eb3eea74fc40f13f0f4cd4c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update groupe",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"description\": \"groupe sur brest\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/groupe/update/5e9d7fe80b89f0480498e92d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupe",
+								"update",
+								"5e9d7fe80b89f0480498e92d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update permission",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idsend\": \"5e5f694d68a88f2cc3309e6b\",\n\t\"autorisation_members\": \"3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/groupe/updatePermission/5e9d7fe80b89f0480498e92d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupe",
+								"updatePermission",
+								"5e9d7fe80b89f0480498e92d"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "conversation",
+			"item": [
+				{
+					"name": "create conversation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"status\": \"groupe\",\n\t\"id\": \"5eb6d9efabac9688b9ac06ec\",\n\t\"idsend\": \"5e5f69cc68a88f2cc3309e6c\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/conversation/create/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"conversation",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"status\": \"groupe\",\n\t\"id\": \"5eb6daa1fbb36889da34f955\",\n\t\"idsend\": \"5e5f69cc68a88f2cc3309e6c\",\n\t\"message\": \"ca marche\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/conversation/messagerie",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"conversation",
+								"messagerie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add commentaire",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"status\": \"groupe\",\n\t\"id\": \"5eb6daa1fbb36889da34f955\",\n\t\"idsend\": \"5e5f69cc68a88f2cc3309e6c\",\n\t\"message\": \"ca marche\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/conversation/messagerie",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"conversation",
+								"messagerie"
 							]
 						}
 					},
