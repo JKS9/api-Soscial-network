@@ -22,8 +22,15 @@ class Groupe {
     this.CommentaireModel = connect.model('Commentaire', CommentaireModel)
 
     this.CreateConversation()
+
     this.addMessage()
     this.addCommentaire()
+
+    this.showConversation()
+    this.showCommentaire()
+
+    this.deleteMessage()
+    this.deleteCommentaire()
   }
   
   CreateConversation () {
@@ -444,9 +451,675 @@ class Groupe {
   addCommentaire () {
     this.app.post('/conversation/commentaire/:idmessage', (req, res) => {
       try {
-        res.status(200).json({
-          code: 200,
-          message: 'ça marche'
+        this.MessageModel.findById(req.params.idmessage).then(message => {
+          this.ConversationModel.findById(message.id_conversation).then(conversation => {
+            if (conversation.id_event) {
+              this.EventModel.findById(conversation.id_event).then(event => {
+                if (event.administrators_ids.some(o => req.body.idsend.includes(o))) {
+                  const commentaire = {
+                    id_message: req.params.idmessage,
+                    id_sende: req.body.idsend,
+                    commentaire: req.body.commentaire
+                  }
+                  const commentaireModel = this.CommentaireModel(commentaire)
+                  commentaireModel.save().then(() => {
+                    res.status(200).json({
+                      code: 200,
+                      message: 'commentaire envoyer avec succés'
+                    })
+                  }).catch(err => {
+                    res.status(500).json({
+                      code: 300,
+                      message: err
+                    })
+                  })
+                } else if (event.moderators_ids.some(o => req.body.idsend.includes(o))) {
+                  const commentaire = {
+                    id_message: req.params.idmessage,
+                    id_sende: req.body.idsend,
+                    commentaire: req.body.commentaire
+                  }
+                  const commentaireModel = this.CommentaireModel(commentaire)
+                  commentaireModel.save().then(() => {
+                    res.status(200).json({
+                      code: 200,
+                      message: 'commentaire envoyer avec succés'
+                    })
+                  }).catch(err => {
+                    res.status(500).json({
+                      code: 300,
+                      message: err
+                    })
+                  })
+                } else if (event.members_ids.some(o => req.body.idsend.includes(o))) {
+                  const commentaire = {
+                    id_message: req.params.idmessage,
+                    id_sende: req.body.idsend,
+                    commentaire: req.body.commentaire
+                  }
+                  const commentaireModel = this.CommentaireModel(commentaire)
+                  commentaireModel.save().then(() => {
+                    res.status(200).json({
+                      code: 200,
+                      message: 'commentaire envoyer avec succés'
+                    })
+                  }).catch(err => {
+                    res.status(500).json({
+                      code: 300,
+                      message: err
+                    })
+                  })
+                } else {
+                  res.status(200).json({
+                    code: 200,
+                    message: 'vous ne pouvez commanter ce message'
+                  })
+                }
+              }).catch(err => {
+                res.status(500).json({
+                  code: 500,
+                  message: err
+                })
+              })
+            } else if (conversation.id_groupe) {
+              this.GroupeModel.findById(conversation.id_groupe).then(groupe => {
+                if (groupe.administrators_id.some(o => req.body.idsend.includes(o))) {
+                  const commentaire = {
+                    id_message: req.params.idmessage,
+                    id_sende: req.body.idsend,
+                    commentaire: req.body.commentaire
+                  }
+                  const commentaireModel = this.CommentaireModel(commentaire)
+                  commentaireModel.save().then(() => {
+                    res.status(200).json({
+                      code: 200,
+                      message: 'commentaire envoyer avec succés'
+                    })
+                  }).catch(err => {
+                    res.status(500).json({
+                      code: 300,
+                      message: err
+                    })
+                  })
+                } else if (groupe.moderators_ids.some(o => req.body.idsend.includes(o))) {
+                  const commentaire = {
+                    id_message: req.params.idmessage,
+                    id_sende: req.body.idsend,
+                    commentaire: req.body.commentaire
+                  }
+                  const commentaireModel = this.CommentaireModel(commentaire)
+                  commentaireModel.save().then(() => {
+                    res.status(200).json({
+                      code: 200,
+                      message: 'commentaire envoyer avec succés'
+                    })
+                  }).catch(err => {
+                    res.status(500).json({
+                      code: 300,
+                      message: err
+                    })
+                  })
+                } else if (groupe.members_ids.some(o => req.body.idsend.includes(o))) {
+                  const commentaire = {
+                    id_message: req.params.idmessage,
+                    id_sende: req.body.idsend,
+                    commentaire: req.body.commentaire
+                  }
+                  const commentaireModel = this.CommentaireModel(commentaire)
+                  commentaireModel.save().then(() => {
+                    res.status(200).json({
+                      code: 200,
+                      message: 'commentaire envoyer avec succés'
+                    })
+                  }).catch(err => {
+                    res.status(500).json({
+                      code: 300,
+                      message: err
+                    })
+                  })
+                } else {
+                  res.status(200).json({
+                    code: 200,
+                    message: 'vous ne pouvez commanter ce message'
+                  })
+                }
+              }).catch(err => {
+                res.status(500).json({
+                  code: 500,
+                  message: err
+                })
+              })
+            }
+          }).catch(err => {
+            res.status(500).json({
+              code: 500,
+              message: err
+            })
+          })
+        }).catch(err => {
+          res.status(500).json({
+            code: 500,
+            message: err
+          })
+        })
+      } catch (err) {
+        res.status(500).json({
+          code: 500,
+          message: err
+        })
+      }
+    })
+  }
+
+  showConversation () {
+    this.app.get('/conversation/:id/:idsend', (req, res) => {
+      try {
+        this.ConversationModel.findById(req.params.id).then(conversation => {
+          if (conversation.id_event) {
+            this.EventModel.findById(conversation.id_event).then(event => {
+              if (event.administrators_ids.some(o => req.params.idsend.includes(o))) {
+                this.MessageModel.find({ id_conversation: req.params.id }).then(message => {
+                  res.status(200).json(message || {})
+                }).catch(err => {
+                  res.status(500).json({
+                    code: 300,
+                    message: err
+                  })
+                })
+              } else {
+                if (event.moderators_ids.some(o => req.params.idsend.includes(o))) {
+                  this.MessageModel.find({ id_conversation: req.params.id }).then(message => {
+                    res.status(200).json(message || {})
+                  }).catch(err => {
+                    res.status(500).json({
+                      code: 300,
+                      message: err
+                    })
+                  })
+                } else {
+                  if (event.members_ids.some(o => req.params.idsend.includes(o))) {
+                    this.MessageModel.find({ id_conversation: req.params.id }).then(message => {
+                      res.status(200).json(message || {})
+                    }).catch(err => {
+                      res.status(500).json({
+                        code: 300,
+                        message: err
+                      })
+                    })
+                  } else {
+                    res.status(300).json({
+                      code: 300,
+                      message: 'vous ne pouvez voir cette conversation'
+                    })
+                  }
+                }
+              }
+            }).catch(err => {
+              res.status(500).json({
+                code: 300,
+                message: err
+              })
+            })
+          } else if (conversation.id_groupe) {
+            this.GroupeModel.findById(conversation.id_groupe).then(groupe => {
+              if (groupe.administrators_id.some(o => req.params.idsend.includes(o))) {
+                this.MessageModel.find({ id_conversation: req.params.id }).then(message => {
+                  res.status(200).json(message || {})
+                }).catch(err => {
+                  res.status(500).json({
+                    code: 300,
+                    message: err
+                  })
+                })
+              } else {
+                if (groupe.moderators_ids.some(o => req.params.idsend.includes(o))) {
+                  this.MessageModel.find({ id_conversation: req.params.id }).then(message => {
+                    res.status(200).json(message || {})
+                  }).catch(err => {
+                    res.status(500).json({
+                      code: 300,
+                      message: err
+                    })
+                  })
+                } else {
+                  if (groupe.members_ids.some(o => req.params.idsend.includes(o))) {
+                    this.MessageModel.find({ id_conversation: req.params.id }).then(message => {
+                      res.status(200).json(message || {})
+                    }).catch(err => {
+                      res.status(500).json({
+                        code: 300,
+                        message: err
+                      })
+                    })
+                  } else {
+                    res.status(300).json({
+                      code: 300,
+                      message: 'vous ne pouvez voir cette conversation'
+                    })
+                  }
+                }
+              }
+            }).catch(err => {
+              res.status(500).json({
+                code: 300,
+                message: err
+              })
+            })
+          }
+        }).catch(err => {
+          res.status(500).json({
+            code: 300,
+            message: err
+          })
+        })
+      } catch (err) {
+        res.status(500).json({
+          code: 500,
+          message: err
+        })
+      }
+    })
+  }
+  
+  showCommentaire () {
+    this.app.get('/conversation/commentaire/:idmessage/:idsend', (req, res) => {
+      try {
+        this.MessageModel.findById(req.params.idmessage).then(message => {
+          this.ConversationModel.findById(message.id_conversation).then(conversation => {
+            if (conversation.id_event) {
+              this.EventModel.findById(conversation.id_event).then(event => {
+                if (event.administrators_ids.some(o => req.params.idsend.includes(o))) {
+                  this.CommentaireModel.find({ id_message: req.params.idmessage }).then(commentaire => {
+                    res.status(200).json(commentaire || {})
+                  }).catch(err => {
+                    res.status(500).json({
+                      code: 300,
+                      message: err
+                    })
+                  })
+                } else {
+                  if (conversation.moderators_ids.some(o => req.params.idsend.includes(o))) {
+                    this.CommentaireModel.find({ id_message: req.params.idmessage }).then(commentaire => {
+                      res.status(200).json(commentaire || {})
+                    }).catch(err => {
+                      res.status(500).json({
+                        code: 300,
+                        message: err
+                      })
+                    })
+                  } else {
+                    if (conversation.members_ids.some(o => req.params.idsend.includes(o))) {
+                      this.CommentaireModel.find({ id_message: req.params.idmessage }).then(commentaire => {
+                        res.status(200).json(commentaire || {})
+                      }).catch(err => {
+                        res.status(500).json({
+                          code: 300,
+                          message: err
+                        })
+                      })
+                    } else {
+                      res.status(300).json({
+                        code: 300,
+                        message: 'vous ne pouvez voir cette conversation'
+                      })
+                    }
+                  }
+                }
+              }).catch(err => {
+                res.status(500).json({
+                  code: 300,
+                  message: err
+                })
+              })
+            } else if (conversation.id_groupe) {
+              this.EventModel.findById(conversation.id_event).then(event => {
+                if (conversation.administrators_ids.some(o => req.params.idsend.includes(o))) {
+                  this.CommentaireModel.find({ id_message: req.params.idmessage }).then(commentaire => {
+                    res.status(200).json(commentaire || {})
+                  }).catch(err => {
+                    res.status(500).json({
+                      code: 300,
+                      message: err
+                    })
+                  })
+                } else {
+                  if (conversation.moderators_ids.some(o => req.params.idsend.includes(o))) {
+                    this.CommentaireModel.find({ id_message: req.params.idmessage }).then(commentaire => {
+                      res.status(200).json(commentaire || {})
+                    }).catch(err => {
+                      res.status(500).json({
+                        code: 300,
+                        message: err
+                      })
+                    })
+                  } else {
+                    if (conversation.members_ids.some(o => req.params.idsend.includes(o))) {
+                      this.CommentaireModel.find({ id_message: req.params.idmessage }).then(commentaire => {
+                        res.status(200).json(commentaire || {})
+                      }).catch(err => {
+                        res.status(500).json({
+                          code: 300,
+                          message: err
+                        })
+                      })
+                    } else {
+                      res.status(300).json({
+                        code: 300,
+                        message: 'vous ne pouvez voir cette conversation'
+                      })
+                    }
+                  }
+                }
+              }).catch(err => {
+                res.status(500).json({
+                  code: 300,
+                  message: err
+                })
+              })
+            }
+          }).catch(err => {
+            res.status(500).json({
+              code: 300,
+              message: err
+            })
+          })
+        }).catch(err => {
+          res.status(500).json({
+            code: 300,
+            message: err
+          })
+        })
+      } catch (err) {
+        res.status(500).json({
+          code: 500,
+          message: err
+        })
+      }
+    })
+  }
+
+  deleteMessage () {
+    this.app.delete('/conversation/message/:idmessage/:idsend', (req, res) => {
+      try {
+        this.MessageModel.findById(req.params.idmessage).then(message => {
+          this.ConversationModel.findById(message.id_conversation).then(conversation => {
+            if (conversation.id_event) {
+              this.EventModel.findById(conversation.id_event).then(event => {
+                if (event.administrators_ids.some(o => req.params.idsend.includes(o))) {
+                  this.MessageModel.findByIdAndRemove(req.params.idmessage).then(deleteMessage => {
+                    this.CommentaireModel.findAndRemove({id_message: req.params.idmessage}).then(deleteCommentaire => {
+                      res.status(200).json({
+                        code: 200,
+                        message: 'message delete'
+                      })
+                    }).catch(err => {
+                      res.status(500).json({
+                        code: 500,
+                        message: err
+                      })
+                    })
+                  }).catch(err => {
+                    res.status(500).json({
+                      code: 500,
+                      message: err
+                    })
+                  })
+                } else {
+                  if (event.moderators_ids.some(o => req.params.idsend.includes(o))) {
+                    this.MessageModel.findByIdAndRemove(req.params.idmessage).then(deleteMessage => {
+                      res.status(200).json({
+                        code: 200,
+                        message: deleteMessage
+                      })
+                    }).catch(err => {
+                      res.status(500).json({
+                        code: 500,
+                        message: err
+                      })
+                    })
+                  } else if (message.id_user === req.params.idsend) {
+                    this.MessageModel.findByIdAndRemove(req.params.idmessage).then(deleteMessage => {
+                      res.status(200).json({
+                        code: 200,
+                        message: deleteMessage
+                      })
+                    }).catch(err => {
+                      res.status(500).json({
+                        code: 500,
+                        message: err
+                      })
+                    })
+                  } else {
+                    res.status(200).json({
+                      code: 200,
+                      message: 'vous ne pouvez pas supprimer ce message'
+                    })
+                  }
+                }
+              }).catch(err => {
+                res.status(500).json({
+                  code: 300,
+                  message: err
+                })
+              })
+            } else if (conversation.id_groupe) {
+              this.GroupeModel.findById(conversation.id_groupe).then(groupe => {
+                if (groupe.administrators_id.some(o => req.params.idsend.includes(o))) {
+                  this.MessageModel.findByIdAndRemove(req.params.idmessage).then(deleteMessage => {
+                    res.status(200).json({
+                      code: 200,
+                      message: deleteMessage
+                    })
+                  }).catch(err => {
+                    res.status(500).json({
+                      code: 500,
+                      message: err
+                    })
+                  })
+                } else {
+                  if (groupe.moderators_ids.some(o => req.params.idsend.includes(o))) {
+                    this.MessageModel.findByIdAndRemove(req.params.idmessage).then(deleteMessage => {
+                      res.status(200).json({
+                        code: 200,
+                        message: deleteMessage
+                      })
+                    }).catch(err => {
+                      res.status(500).json({
+                        code: 500,
+                        message: err
+                      })
+                    })
+                  } else if (message.id_user === req.params.idsend) {
+                    this.MessageModel.findByIdAndRemove(req.params.idmessage).then(deleteMessage => {
+                      res.status(200).json({
+                        code: 200,
+                        message: deleteMessage
+                      })
+                    }).catch(err => {
+                      res.status(500).json({
+                        code: 500,
+                        message: err
+                      })
+                    })
+                  } else {
+                    res.status(200).json({
+                      code: 200,
+                      message: 'vous ne pouvez pas supprimer ce message'
+                    })
+                  }
+                }
+              }).catch(err => {
+                res.status(500).json({
+                  code: 300,
+                  message: err
+                })
+              })
+            }
+          }).catch(err => {
+            res.status(500).json({
+              code: 300,
+              message: err
+            })
+          })
+        }).catch(err => {
+          res.status(500).json({
+            code: 300,
+            message: err
+          })
+        })
+      } catch (err) {
+        res.status(500).json({
+          code: 500,
+          message: err
+        })
+      }
+    })
+  }
+
+  deleteCommentaire () {
+    this.app.delete('/conversation/commentaire/:idcommentaire/:idsend', (req, res) => {
+      try {
+        this.CommentaireModel.findById(req.params.idcommentaire).then(commentaire => {
+          console.log('1')
+          this.MessageModel.findById(commentaire.id_message).then(message => {
+            console.log(message)
+            if (message === null) {
+              this.CommentaireModel.findByIdAndRemove(req.params.idcommentaire).then(commentaires => {
+                res.status(200).json({
+                  code: 200,
+                  message: 'commentaire supprimer, car aucun message parent na été trouvé'
+                })
+              }).catch(err => {
+                res.status(500).json({
+                  code: 500,
+                  message: err
+                })
+              })
+            } else {
+              this.ConversationModel.findById(message.id_conversation).then(conversation => {
+                if (conversation.id_event) {
+                  this.EventModel.findById(conversation.id_event).then(event => {
+                    if (event.administrators_ids.some(o => req.params.idsend.includes(o))) {
+                      this.CommentaireModel.findByIdAndRemove(req.params.idcommentaire).then(commentaires => {
+                        res.status(200).json({
+                          code: 200,
+                          message: 'commentaire supprimer'
+                        })
+                      }).catch(err => {
+                        res.status(500).json({
+                          code: 500,
+                          message: err
+                        })
+                      })
+                    } else {
+                      if (event.moderators_ids.some(o => req.params.idsend.includes(o))) {
+                        this.CommentaireModel.findByIdAndRemove(req.params.idcommentaire).then(commentaires => {
+                          res.status(200).json({
+                            code: 200,
+                            message: 'commentaire supprimer'
+                          })
+                        }).catch(err => {
+                          res.status(500).json({
+                            code: 500,
+                            message: err
+                          })
+                        })
+                      } else if (commentaire.id_sende === req.params.idsend) {
+                        this.CommentaireModel.findByIdAndRemove(req.params.idcommentaire).then(commentaires => {
+                          res.status(200).json({
+                            code: 200,
+                            message: 'commentaire supprimer'
+                          })
+                        }).catch(err => {
+                          res.status(500).json({
+                            code: 500,
+                            message: err
+                          })
+                        })
+                      } else {
+                        res.status(200).json({
+                          code: 200,
+                          message: 'vous ne pouvez pas supprimer ce commentaire'
+                        })
+                      }
+                    }
+                  }).catch(err => {
+                    res.status(500).json({
+                      code: 500,
+                      message: err
+                    })
+                  })
+                } else if (conversation.id_groupe) {
+                  this.GroupeModel.findById(conversation.id_groupe).then(groupe => {
+                    if (groupe.administrators_id.some(o => req.params.idsend.includes(o))) {
+                      this.CommentaireModel.findByIdAndRemove(req.params.idcommentaire).then(commentaires => {
+                        res.status(200).json({
+                          code: 200,
+                          message: 'commentaire supprimer'
+                        })
+                      }).catch(err => {
+                        res.status(500).json({
+                          code: 500,
+                          message: err
+                        })
+                      })
+                    } else {
+                      if (groupe.moderators_ids.some(o => req.params.idsend.includes(o))) {
+                        this.CommentaireModel.findByIdAndRemove(req.params.idcommentaire).then(commentaires => {
+                          res.status(200).json({
+                            code: 200,
+                            message: 'commentaire supprimer'
+                          })
+                        }).catch(err => {
+                          res.status(500).json({
+                            code: 500,
+                            message: err
+                          })
+                        })
+                      } else if (commentaire.id_sende === req.params.idsend) {
+                        this.CommentaireModel.findByIdAndRemove(req.params.idcommentaire).then(commentaires => {
+                          res.status(200).json({
+                            code: 200,
+                            message: 'commentaire supprimer'
+                          })
+                        }).catch(err => {
+                          res.status(500).json({
+                            code: 500,
+                            message: err
+                          })
+                        })
+                      } else {
+                        res.status(200).json({
+                          code: 200,
+                          message: 'vous ne pouvez pas supprimer ce commentaire'
+                        })
+                      }
+                    }
+                  }).catch(err => {
+                    res.status(500).json({
+                      code: 500,
+                      message: err
+                    })
+                  })
+                }
+              }).catch(err => {
+                res.status(500).json({
+                  code: 500,
+                  message: err
+                })
+              })
+            }
+          }).catch(err => {
+            res.status(500).json({
+              code: 500,
+              message: err
+            })
+          })
+        }).catch(err => {
+          res.status(500).json({
+            code: 500,
+            message: err
+          })
         })
       } catch (err) {
         res.status(500).json({
