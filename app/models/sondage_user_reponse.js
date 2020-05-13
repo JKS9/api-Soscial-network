@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const Schema = new mongoose.Schema({
-  id_question: {
+  id_sondage: {
     type: String
   },
   id_reponse: {
