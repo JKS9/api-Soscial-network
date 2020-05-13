@@ -63,6 +63,7 @@ class Server {
     new routes.Event(this.app, this.connect)
     new routes.Groupe(this.app, this.connect)
     new routes.Conversation(this.app, this.connect)
+    new routes.Album(this.app, this.connect)
 
     this.app.use((req, res) => {
       res.status(404).json({
