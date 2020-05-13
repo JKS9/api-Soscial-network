@@ -65,6 +65,8 @@ class Server {
     new routes.Conversation(this.app, this.connect)
     new routes.Album(this.app, this.connect)
     new routes.Sondage(this.app, this.connect)
+    new routes.Billetterie(this.app, this.connect)
+    new routes.Shopping(this.app, this.connect)
 
     this.app.use((req, res) => {
       res.status(404).json({

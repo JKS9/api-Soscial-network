@@ -17,7 +17,7 @@ class User {
   }
 
   /**
-   * Show
+   * Show user
    */
   show () {
     this.app.get('/user/show/:id', (req, res) => {
@@ -40,7 +40,7 @@ class User {
   }
 
   /**
-   * Create
+   * Create User
    */
   create () {
     this.app.post('/user/create', (req, res) => {
@@ -75,7 +75,7 @@ class User {
   }
 
   /**
-   * List
+   * Search users
    */
   search () {
     this.app.post('/user/search', (req, res) => {
@@ -103,6 +103,9 @@ class User {
     })
   }
 
+  /**
+   * Delete user
+   */
   delete () {
     this.app.delete('/user/delete/:id', (req, res) => {
       try {
@@ -123,6 +126,9 @@ class User {
     })
   }
 
+  /**
+   * Update user
+   */
   update () {
     this.app.put('/user/update/:id', (req, res) => {
       try {

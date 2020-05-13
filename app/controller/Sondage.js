@@ -5,10 +5,10 @@ const SondageModel = require('../models/sondage.js')
 const SondageReponseModel = require('../models/sondage_reponse.js')
 const SondageUserReponseModel = require('../models/sondage_user_reponse.js')
 /**
- * Event
+ * Sondage
  * @class
  */
-class Groupe {
+class Sondage {
   constructor (app, connect) {
     this.app = app
     this.UserModel = connect.model('User', UserModel)
@@ -30,6 +30,9 @@ class Groupe {
     this.showOneSondage()
   }
 
+  /**
+   * Create sondage
+   */
   createSondage () {
     this.app.post('/sondage/create/:idevent', (req, res) => {
       try {
@@ -74,6 +77,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Create reponse sondage of a sondage
+   */
   ceateReponseSondage () {
     this.app.post('/sondage/create/reponse/:idsondage', (req, res) => {
       try {
@@ -117,6 +123,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Add reponse user of a sondage
+   */
   addReponseUser () {
     this.app.post('/sondage/reponse/user/:idsondage', (req, res) => {
       try {
@@ -190,6 +199,9 @@ class Groupe {
     })
   }
   
+  /**
+   * Delete sondage
+   */
   DeleteSondage () {
     this.app.delete('/sondage/delete/:idsondage/:idsend', (req, res) => {
       try {
@@ -248,6 +260,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Delete reponse of a sondage
+   */
   DeleteSondageReponse () {
     this.app.delete('/sondage/delete/reponse/:idreponse/:idsend', (req, res) => {
       try {
@@ -313,6 +328,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Delete reponse user of a sondage
+   */
   DeleteSondageReponseUser () {
     this.app.delete('/sondage/delete/reponseUser/:idreponseUser/:idsend', (req, res) => {
       try {
@@ -378,6 +396,9 @@ class Groupe {
     })
   }
 
+  /**
+   *  Show sondage of a event
+   */
   showSondage () {
     this.app.get('/sondage/:idevent/:idsend', (req, res) => {
       try {
@@ -429,6 +450,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Show one sondage
+   */
   showOneSondage () {
     this.app.get('/sondage/one/:idsondage/:idsend', (req, res) => {
       try {
@@ -494,4 +518,4 @@ class Groupe {
   }
 }
 
-module.exports = Groupe
+module.exports = Sondage

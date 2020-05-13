@@ -32,6 +32,9 @@ class Groupe {
     this.updateGroupePermission()
   }
 
+  /**
+   * Create groupe
+   */
   createGroup () {
     this.app.post('/groupe/create/', (req, res) => {
       try {
@@ -64,6 +67,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Add members in groupe
+   */
   addMenbers () {
     this.app.post('/groupe/addMembers/:idgroup', (req, res) => {
       try {   
@@ -158,6 +164,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Add moderator in groupe
+   */
   addModerators () {
     this.app.post('/groupe/addModo/:idgroup', (req, res) => {
       try {        
@@ -203,6 +212,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Add Admin in groupe
+   */
   addAdministrateur () {
     this.app.post('/groupe/addAdmin/:idgroup', (req, res) => {
       try {        
@@ -248,6 +260,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Delete members in groupe
+   */
   deleteMenbers () {
     this.app.delete('/groupe/deleteMenbers/:idgroup', (req, res) => {
       try {        
@@ -293,6 +308,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Delete moderator in groupe
+   */
   deleteModerators () {
     this.app.delete('/groupe/deleteModerators/:idgroup', (req, res) => {
       try {        
@@ -338,6 +356,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Delete admin in groupe
+   */
   deleteAdmin () {
     this.app.delete('/groupe/deleteAdmin/:idgroup', (req, res) => {
       try {        
@@ -390,6 +411,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Delete groupe
+   */
   deleteGroupe () {
     this.app.delete('/groupe/delete/:idgroup/user/:iduser', (req, res) => {
       try {
@@ -424,6 +448,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Show groupe public
+   */
   showGroup () {
     this.app.get('/groupe/show/', (req, res) => {
       try {
@@ -451,6 +478,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Show event in groupe
+   */
   showGroupEvent () {
     this.app.get('/groupe/show/:idgroupe/event', (req, res) => {
       try {
@@ -478,6 +508,9 @@ class Groupe {
     })
   }
 
+  /**
+   * update statu of a groupe
+   */
   updateSatus () {
     this.app.put('/groupe/updateStatus/:idgroup', (req, res) => {
       try {
@@ -527,6 +560,9 @@ class Groupe {
     })
   }
 
+  /**
+   * update one groupe
+   */
   updateGroupe () {
     this.app.put('/groupe/update/:id', (req, res) => {
       try {
@@ -547,6 +583,9 @@ class Groupe {
     })
   }
 
+  /**
+   * update autorisation of a groupe
+   */
   updateGroupePermission () {
     this.app.put('/groupe/updatePermission/:id', (req, res) => {
       try {

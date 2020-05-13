@@ -6,14 +6,15 @@ const AlbumPhotoModel = require('../models/album_photo.js')
 const CommentairePhotoModel = require('../models/photo_commentaire.js')
 
 /**
- * Event
+ * Album
  * @class
  */
-class Groupe {
+class Album {
   constructor (app, connect) {
     this.app = app
     this.UserModel = connect.model('User', UserModel)
     this.EventModel = connect.model('Event', EventModel)
+
     this.AlbumModel = connect.model('Album', AlbumModel)
     this.AlbumPhotoModel = connect.model('AlbumPhoto', AlbumPhotoModel)
     this.CommentairePhotoModel = connect.model('CommentairePhoto', CommentairePhotoModel)
@@ -28,7 +29,10 @@ class Groupe {
     this.DeleteCommentaire()
     this.DeletePhoto()
   }
-  
+
+  /**
+   * Create album and add picture in a album
+   */
   addPicture () {
     this.app.post('/album/addpicture/:idevent', (req, res) => {
       try {
@@ -263,6 +267,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Show album of a event
+   */
   showAlbumEvent () {
     this.app.get('/album/:idevent/:idsend', (req, res) => {
       try {
@@ -342,6 +349,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Show one picture of a album
+   */
   showOnePhoto () {
     this.app.get('/album/photo/:idphoto/:idsend', (req, res) => {
       try {
@@ -436,6 +446,9 @@ class Groupe {
     })
   }
 
+  /**
+   * add commentaire in a picture
+   */
   AddCommentairePicture () {
     this.app.post('/album/commentaire/:idphoto/', (req, res) => {
       try {
@@ -533,6 +546,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Delete commentaire in a picture
+   */
   DeleteCommentaire () {
     this.app.delete('/album/commentaire/:idcommentaire/:idsend', (req, res) => {
       try {
@@ -619,6 +635,9 @@ class Groupe {
     })
   }
 
+  /**
+   * add picture
+   */
   DeletePhoto () {
     this.app.delete('/album/photo/:idphoto/:idsend', (req, res) => {
       try {
@@ -699,4 +718,4 @@ class Groupe {
   }
 }
 
-module.exports = Groupe
+module.exports = Album

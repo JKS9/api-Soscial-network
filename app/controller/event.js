@@ -27,6 +27,9 @@ class Event {
     this.updateEvent()
   }
 
+  /**
+   * Create event
+   */
   createEvent () {
     this.app.post('/event/create/', (req, res) => {
       try {
@@ -59,6 +62,9 @@ class Event {
     })
   }
 
+  /**
+   * Add menbers in event
+   */
   addMenbers () {
     this.app.post('/event/addMembers/:idevent', (req, res) => {
       try {   
@@ -153,6 +159,9 @@ class Event {
     })
   }
 
+  /**
+   * Add moderators in event
+   */
   addModerators () {
     this.app.post('/event/addModo/:idevent', (req, res) => {
       try {        
@@ -198,6 +207,9 @@ class Event {
     })
   }
 
+  /**
+   * Add Admin in event
+   */
   addAdministrateur () {
     this.app.post('/event/addAdmin/:idevent', (req, res) => {
       try {        
@@ -243,6 +255,9 @@ class Event {
     })
   }
 
+  /**
+   * Delete menbers in event
+   */
   deleteMenbers () {
     this.app.delete('/event/deleteMenbers/:idevent', (req, res) => {
       try {        
@@ -288,6 +303,9 @@ class Event {
     })
   }
 
+  /**
+   * Delete moderator in event
+   */
   deleteModerators () {
     this.app.delete('/event/deleteModerators/:idevent', (req, res) => {
       try {        
@@ -333,6 +351,9 @@ class Event {
     })
   }
 
+  /**
+   * Delete admin in event
+   */
   deleteAdmin () {
     this.app.delete('/event/deleteAdmin/:idevent', (req, res) => {
       try {        
@@ -385,6 +406,9 @@ class Event {
     })
   }
 
+  /**
+   * Delete event
+   */
   DeleteEvent () {
     this.app.delete('/event/delete/:idevent/user/:iduser', (req, res) => {
       try {
@@ -419,6 +443,9 @@ class Event {
     })
   }
 
+  /**
+   * Show event public
+   */
   showEvent () {
     this.app.get('/event/show/', (req, res) => {
       try {
@@ -446,6 +473,9 @@ class Event {
     })
   }
 
+  /**
+   * Update one event
+   */
   updateEvent () {
     this.app.put('/event/update/:id', (req, res) => {
       try {

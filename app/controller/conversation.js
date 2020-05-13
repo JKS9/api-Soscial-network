@@ -7,10 +7,10 @@ const MessageModel = require('../models/message.js')
 const CommentaireModel = require('../models/commentaire.js')
 
 /**
- * Event
+ * Conversation
  * @class
  */
-class Groupe {
+class Conversation {
   constructor (app, connect) {
     this.app = app
     this.UserModel = connect.model('User', UserModel)
@@ -33,6 +33,9 @@ class Groupe {
     this.deleteCommentaire()
   }
   
+  /**
+   * Create conversation of a event
+   */
   CreateConversation () {
     this.app.post('/conversation/create/', (req, res) => {
       try {
@@ -191,6 +194,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Add message in conversation
+   */
   addMessage () {
     this.app.post('/conversation/messagerie/', (req, res) => {
       try {
@@ -448,6 +454,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Add commentaire of a message
+   */
   addCommentaire () {
     this.app.post('/conversation/commentaire/:idmessage', (req, res) => {
       try {
@@ -611,6 +620,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Show conversation
+   */
   showConversation () {
     this.app.get('/conversation/:id/:idsend', (req, res) => {
       try {
@@ -720,7 +732,10 @@ class Groupe {
       }
     })
   }
-  
+
+  /**
+   * Show commentaire
+   */
   showCommentaire () {
     this.app.get('/conversation/commentaire/:idmessage/:idsend', (req, res) => {
       try {
@@ -838,6 +853,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Delete message
+   */
   deleteMessage () {
     this.app.delete('/conversation/message/:idmessage/:idsend', (req, res) => {
       try {
@@ -976,6 +994,9 @@ class Groupe {
     })
   }
 
+  /**
+   * Delete commentaire
+   */
   deleteCommentaire () {
     this.app.delete('/conversation/commentaire/:idcommentaire/:idsend', (req, res) => {
       try {
@@ -1131,4 +1152,4 @@ class Groupe {
   }
 }
 
-module.exports = Groupe
+module.exports = Conversation
