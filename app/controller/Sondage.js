@@ -28,6 +28,9 @@ class Sondage {
 
     this.showSondage()
     this.showOneSondage()
+
+    this.updateSondage()
+    this.updateSondageReponse()
   }
 
   /**
@@ -496,6 +499,127 @@ class Sondage {
                 })
               }
             }
+          }).catch(err => {
+            res.status(500).json({
+              code: 500,
+              message: err
+            })
+          })
+        }).catch(err => {
+          res.status(500).json({
+            code: 500,
+            message: err
+          })
+        })
+      } catch (err) {
+        res.status(500).json({
+          code: 500,
+          message: err
+        })
+      }
+    })
+  }
+
+  /**
+   * Update one sondage
+   */
+  updateSondage () {
+    this.app.put('/sondage/update/:idsondage/:idsend', (req, res) => {
+      try {
+        this.SondageModel.findById(req.params.idsondage).then(sondage => {
+          this.EventModel.findById(sondage.id_event).then(event => {
+            if (event.administrators_ids.some(o => req.params.idsend.includes(o)) || event.moderators_ids.some(o => req.params.idsend.includes(o)) || req.params.idsend === sondage.id_user_creator) {
+              if (req.body.question) {
+                const updateSondage = {
+                  question: req.body.question
+                }
+                this.SondageModel.findOneAndUpdate(req.params.id, updateSondage).then(sondage => {
+                  res.status(201).json({
+                    code: 201,
+                    message: 'sondage update'
+                  })
+                }).catch(err => {
+                  res.status(500).json({
+                    code: 500,
+                    message: err
+                  })
+                })
+              } else {
+                res.status(403).json({
+                  code: 403,
+                  message: 'bad request'
+                })
+              }  
+            } else {
+              res.status(403).json({
+                code: 403,
+                message: 'vous ne pouvez modifier ce sondage'
+              })
+            }
+          }).catch(err => {
+            res.status(500).json({
+              code: 500,
+              message: err
+            })
+          })
+        }).catch(err => {
+          res.status(500).json({
+            code: 500,
+            message: err
+          })
+        })
+      } catch (err) {
+        res.status(500).json({
+          code: 500,
+          message: err
+        })
+      }
+    })
+  }
+
+  /**
+   * Update reponse of a sondage
+   */
+  updateSondageReponse () {
+    this.app.put('/sondage/update/reponse/:idreponse/:idsend', (req, res) => {
+      try {
+        this.SondageReponseModel.findById(req.params.idreponse).then(sondageReponse => {
+          this.SondageModel.findById(sondageReponse.id_sondage).then(sondage => {
+            this.EventModel.findById(sondage.id_event).then(event => {
+              if (event.administrators_ids.some(o => req.params.idsend.includes(o)) || event.moderators_ids.some(o => req.params.idsend.includes(o)) || req.params.idsend === sondage.id_user_creator) {
+                if (req.body.reponse) {
+                  const updateSondageReponse = {
+                    reponse: req.body.reponse
+                  }
+                  this.SondageReponseModel.findOneAndUpdate(req.params.id, updateSondageReponse).then(sondageRes => {
+                    res.status(201).json({
+                      code: 201,
+                      message: 'reponse update'
+                    })
+                  }).catch(err => {
+                    res.status(500).json({
+                      code: 500,
+                      message: err
+                    })
+                  })
+                } else {
+                  res.status(403).json({
+                    code: 403,
+                    message: 'bad request'
+                  })
+                }  
+              } else {
+                res.status(403).json({
+                  code: 403,
+                  message: 'vous ne pouvez modifier cette reponse de sondage'
+                })
+              }
+            }).catch(err => {
+              res.status(500).json({
+                code: 500,
+                message: err
+              })
+            })
           }).catch(err => {
             res.status(500).json({
               code: 500,
