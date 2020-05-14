@@ -50,58 +50,68 @@ class Shopping {
                           shopping_item: shoppinItem
                         })
                       }).catch(err => {
-                        res.status(500).json({
-                          code: 512,
-                          message: err
-                        })
+                        if (err) {
+                          res.status(400).json({
+                            code: 400,
+                            message: 'creat shopping item failed'
+                          })
+                        }
                       })
                     } else {
                       res.status(403).json({
                         code: 403,
-                        message: 'item déja présent dans la shopping liste'
+                        message: 'item already present in the shopping list'
                       })
                     }
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 512,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(400).json({
+                        code: 400,
+                        message: 'not found'
+                      })
+                    }
                   })
                 } else {
                   res.status(403).json({
                     code: 403,
-                    message: 'vous avez déjà enregistrer un item dans cette liste'
+                    message: 'you dont have a permission'
                   })
                 }
               }).catch(err => {
-                res.status(500).json({
-                  code: 512,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'not found'
+                  })
+                }
               })
             } else {
               res.status(403).json({
                 code: 403,
-                message: 'vous ne fait epas partie de event'
+                message: 'you dont have a permission'
               })
             }
           } else {
             res.status(403).json({
               code: 403,
-              message: 'La shopping liste nes pas active'
+              message: 'shopping list not ready'
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(400).json({
+              code: 400,
+              message: 'event not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -121,34 +131,42 @@ class Shopping {
                   message: 'success delete shopping item'
                 })
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'delete shopping item failed'
+                  })
+                }
               })
             } else {
               res.status(403).json({
                 code: 403,
-                message: 'vous ne faite pas partie de event'
+                message: 'you dont have a permission'
               })
             }
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(400).json({
+                code: 400,
+                message: 'update shopping item failed'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 512,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'shopping item not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -172,34 +190,42 @@ class Shopping {
                   message: 'shopping item update'
                 })
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'update shopping item failed'
+                  })
+                }
               })
             } else {
               res.status(403).json({
                 code: 403,
-                message: 'vous ne faite pas partie de event'
+                message: 'you dont have the permission'
               })
             }
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(400).json({
+                code: 400,
+                message: 'update shopping item failed'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 512,
-            message: err
-          })
+          if (err) {
+            res.status(400).json({
+              code: 400,
+              message: 'shopping item not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -211,21 +237,25 @@ class Shopping {
     this.app.get('/shopping/:idevent', (req, res) => {
       try {
         this.ShoppingItem.find({ id_event: req.params.idevent }).then(items => {
-          res.status(201).json({
-            code: 201,
+          res.status(200).json({
+            code: 200,
             message: items
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 512,
-            message: err
-          })
+          if (err) {
+            res.status(400).json({
+              code: 400,
+              message: 'shopping item failed'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }

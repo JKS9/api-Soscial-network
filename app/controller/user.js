@@ -23,18 +23,22 @@ class User {
     this.app.get('/user/show/:id', (req, res) => {
       try {
         this.UserModel.findById(req.params.id).then(user => {
-          res.status(200).json(user || {})
+          res.status(200).json(user || 'not found user')
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'user introuvable'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(500).json({
+            code: 500,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -51,25 +55,37 @@ class User {
           if (!user.length) {
             const userCreat = userModel.save()
             if (!userCreat) {
-              res.status(500).json({
-                code: 500,
-                message: ''
+              res.status(403).json({
+                code: 403,
+                message: 'failed create user'
               })
               return
             }
-            res.status(200).json(userCreat || {})
+            res.status(201).json({
+              code: 201,
+              message: 'success user create'
+            })
           } else {
-            res.status(500).json({
-              code: 500,
+            res.status(403).json({
+              code: 403,
               message: 'Email already used'
+            })
+          }
+        }).catch(err => {
+          if (err) {
+            res.status(400).json({
+              code: 400,
+              message: 'bad request'
             })
           }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -87,18 +103,22 @@ class User {
         }
 
         this.UserModel.aggregate(pipe).then(user => {
-          res.status(200).json(user || {})
+          res.status(200).json(user || 'users not found')
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'search failed'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -110,18 +130,25 @@ class User {
     this.app.delete('/user/delete/:id', (req, res) => {
       try {
         this.UserModel.findByIdAndRemove(req.params.id).then(user => {
-          res.status(200).json(user || {})
-        }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
+          res.status(200).json({
+            code: 200,
+            message: 'delete user'
           })
+        }).catch(err => {
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'delete not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -133,18 +160,25 @@ class User {
     this.app.put('/user/update/:id', (req, res) => {
       try {
         this.UserModel.findOneAndUpdate(req.params.id, req.body).then(user => {
-          res.status(200).json(user || {})
-        }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
+          res.status(200).json({
+            code: 200,
+            message: 'success user update'
           })
+        }).catch(err => {
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'update failed'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }

@@ -54,28 +54,34 @@ class Sondage {
                 sondage: Sondage
               })
             }).catch(err => {
-              res.status(500).json({
-                code: 500,
-                message: err
-              })
+              if (err) {
+                res.status(400).json({
+                  code: 400,
+                  message: 'create sondage failed'
+                })
+              }
             })
           } else {
             res.status(403).json({
               code: 403,
-              message: 'vous ne faite pas partie des membres'
+              message: 'you dont have the permission'
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(400).json({
+              code: 400,
+              message: 'parent of poll not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bat request'
+          })
+        }
       }
     })
   }
@@ -100,28 +106,34 @@ class Sondage {
                 sondage: SondageReponse
               })
             }).catch(err => {
-              res.status(500).json({
-                code: 500,
-                message: err
-              })
+              if (err) {
+                res.status(400).json({
+                  code: 400,
+                  message: 'add reponse of a sondage failed'
+                })
+              }
             })
           } else {
-            res.status(200).json({
-              code: 200,
-              message: 'tu n est pas l auteur du sondage'
+            res.status(403).json({
+              code: 403,
+              message: 'you dont have the permission'
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(400).json({
+              code: 400,
+              message: 'sondage not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -151,53 +163,63 @@ class Sondage {
                         sondage: SondageUserReponse
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 500,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(400).json({
+                          code: 400,
+                          message: 'add reponse user of a sondage failed'
+                        })
+                      }
                     })
                   }).catch(err => {
                     res.status(403).json({
                       code: 403,
                       err: err,
-                      message: 'reponse not-found'
+                      message: 'sondage reponse not-found'
                     })
                   })
                 } else {
                   res.status(403).json({
                     code: 403,
-                    message: 'Vous avez déjà repondu à ce sondage, vous ne pouvez modifier votre reponse'
+                    message: 'You have already answered this survey'
                   })
                 }
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'bad request'
+                  })
+                }
               })
             } else {
               res.status(403).json({
                 code: 403,
-                message: 'vous ne faite pas partie des membres'
+                message: 'you dont have the permission'
               })
             }
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(400).json({
+                code: 400,
+                message: 'parent of poll not found'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(400).json({
+              code: 400,
+              message: 'parent of poll not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -219,46 +241,58 @@ class Sondage {
                       message: 'success sondage delete'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 500,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(400).json({
+                        code: 400,
+                        message: 'Delete sondage failed'
+                      })
+                    }
                   })
                 }).catch(err => {
-                  res.status(500).json({
-                    code: 450,
-                    message: err
-                  })
+                  if (err) {
+                    res.status(400).json({
+                      code: 400,
+                      message: 'Delete sondage failed'
+                    })
+                  }
                 })
               }).catch(err => {
-                res.status(500).json({
-                  code: 400,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'Delete sondage failed'
+                  })
+                }
               })
             } else {
               res.status(403).json({
                 code: 403,
-                message: 'vous ne pouvez delete ce sondage'
+                message: 'you dont have permission'
               })
             }
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(400).json({
+                code: 400,
+                message: 'parent of poll not found'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'sondage not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -280,22 +314,26 @@ class Sondage {
                       message: 'success delete reponse'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 500,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(400).json({
+                        code: 400,
+                        message: 'Delete sondage reponse failed'
+                      })
+                    }
                   })
                 } else {
                   res.status(403).json({
                     code: 403,
-                    message: 'vous ne pouvez delete cette reponse de sondage'
+                    message: 'you dont have a permission'
                   })
                 }
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'parent of poll not found'
+                  })
+                }
               })
             } else {
               this.SondageReponseModel.findByIdAndRemove(req.params.idreponse).then(sondage => {
@@ -304,29 +342,37 @@ class Sondage {
                   message: 'delete reponse auto, beacause no poll find'
                 })
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'parent of poll not found'
+                  })
+                }
               })
             }
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(400).json({
+                code: 400,
+                message: 'parent of poll not found'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'Reponse user not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -348,22 +394,26 @@ class Sondage {
                       message: 'success delete reponse user'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 500,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(400).json({
+                        code: 400,
+                        message: 'Delete sondage reponse failed'
+                      })
+                    }
                   })
                 } else {
                   res.status(403).json({
                     code: 403,
-                    message: 'vous ne pouvez delete cette reponse de sondage'
+                    message: 'you dont have a permission'
                   })
                 }
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'parent of poll not found'
+                  })
+                }
               })
             } else {
               this.SondageUserReponseModel.findByIdAndRemove(req.params.idreponseUser).then(sondage => {
@@ -372,29 +422,37 @@ class Sondage {
                   message: 'delete reponse auto, beacause no poll find'
                 })
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'Delete failed'
+                  })
+                }
               })
             }
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(400).json({
+                code: 400,
+                message: 'parent of poll not found'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'Reponse user not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(403).json({
+            code: 403,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -413,10 +471,12 @@ class Sondage {
                 message: sondage
               })
             }).catch(err => {
-              res.status(500).json({
-                code: 500,
-                message: err
-              })
+              if (err) {
+                res.status(400).json({
+                  code: 400,
+                  message: 'show sondage failed'
+                })
+              }
             })
           } else {
             if (event.administrators_ids.some(o => req.params.idsend.includes(o)) || event.moderators_ids.some(o => req.params.idsend.includes(o)) || event.members_ids.some(o => req.params.idsend.includes(o))) {
@@ -426,29 +486,35 @@ class Sondage {
                   message: sondage
                 })
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'show one sondage failed'
+                  })
+                }
               })
             } else {
               res.status(403).json({
                 code: 403,
-                message: 'vous avez pas la permission'
+                message: 'you dont have permission'
               })
             }
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'parent of poll not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -469,10 +535,12 @@ class Sondage {
                   reponse: sondageReponse
                 })
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'show one sondage failed'
+                  })
+                }
               })
             } else {
               if (event.administrators_ids.some(o => req.params.idsend.includes(o)) || event.moderators_ids.some(o => req.params.idsend.includes(o)) || event.members_ids.some(o => req.params.idsend.includes(o))) {
@@ -483,39 +551,43 @@ class Sondage {
                     reponse: sondageReponse
                   })
                 }).catch(err => {
-                  res.status(500).json({
-                    code: 500,
-                    message: err
-                  })
-                })
-                res.status(200).json({
-                  code: 200,
-                  message: sondage
+                  if (err) {
+                    res.status(400).json({
+                      code: 400,
+                      message: 'update sondage failed'
+                    })
+                  }
                 })
               } else {
                 res.status(403).json({
                   code: 403,
-                  message: 'vous avez pas la permission'
+                  message: 'you dont have permission'
                 })
               }
             }
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(403).json({
+                code: 403,
+                message: 'parent of poll not found'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'One search sondage not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -539,40 +611,48 @@ class Sondage {
                     message: 'sondage update'
                   })
                 }).catch(err => {
-                  res.status(500).json({
-                    code: 500,
-                    message: err
-                  })
+                  if (err) {
+                    res.status(400).json({
+                      code: 400,
+                      message: 'update sondage failed'
+                    })
+                  }
                 })
               } else {
-                res.status(403).json({
-                  code: 403,
+                res.status(400).json({
+                  code: 400,
                   message: 'bad request'
                 })
               }  
             } else {
               res.status(403).json({
                 code: 403,
-                message: 'vous ne pouvez modifier ce sondage'
+                message: 'you dont have permission'
               })
             }
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(403).json({
+                code: 403,
+                message: 'parent of poll not found'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'sondage not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -597,46 +677,56 @@ class Sondage {
                       message: 'reponse update'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 500,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(400).json({
+                        code: 400,
+                        message: 'update reponse failed'
+                      })
+                    }
                   })
                 } else {
-                  res.status(403).json({
-                    code: 403,
+                  res.status(400).json({
+                    code: 400,
                     message: 'bad request'
                   })
                 }  
               } else {
                 res.status(403).json({
                   code: 403,
-                  message: 'vous ne pouvez modifier cette reponse de sondage'
+                  message: 'you dont have permission'
                 })
               }
             }).catch(err => {
-              res.status(500).json({
-                code: 500,
-                message: err
-              })
+              if (err) {
+                res.status(403).json({
+                  code: 403,
+                  message: 'parent of poll not found'
+                })
+              }
             })
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(403).json({
+                code: 403,
+                message: 'parent of poll not found'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'sondage reponse not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
