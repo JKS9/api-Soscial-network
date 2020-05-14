@@ -40,6 +40,10 @@ const Schema = new mongoose.Schema({
     type: String,
     default: null
   },
+  shopping: {
+    type: Boolean,
+    default: null
+  },
   status: {
     type: String,
     default: 'Public'

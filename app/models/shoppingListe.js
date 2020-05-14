@@ -10,9 +10,6 @@ const Schema = new mongoose.Schema({
   quantity: {
     type: String
   },
-  date_going: {
-    type: Number
-  },
   id_user: {
     type: String
   }
