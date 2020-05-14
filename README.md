@@ -46,19 +46,19 @@ Allows the creation of a single user.
 
 #### Response :
 ```javascript
-  {
-    _id: Object_ID,
-    first_name: String,
-    last_name: String,
-		email: String,
-		password: String, 
-		age: Number,
-		city: String, 
-		city_code: String, 
-		street_number: String,
-		street_type: String,
-		street_name: String,
-		phone: String,
-		image_profil: String
-  }
+{
+	_id: Object_ID,
+	first_name: String,
+	last_name: String,
+	email: String,
+	password: String, 
+	age: Number,
+	city: String,
+	city_code: String,
+	street_number: String,
+	street_type: String,
+	street_name: String,
+	phone: String,
+	image_profil: String
+}
 ```
