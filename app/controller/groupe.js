@@ -14,6 +14,7 @@ class Groupe {
     this.GroupeModel = connect.model('Groupe', GroupeModel)
 
     this.createGroup()
+    this.createEventInGroupe()
 
     this.addMenbers()
     this.addModerators()
@@ -57,6 +58,81 @@ class Groupe {
               message: 'imposible de créer un évenement, Administrateur selectionner introuvable'
             })
           }
+        })
+      } catch (err) {
+        res.status(500).json({
+          code: 500,
+          message: err
+        })
+      }
+    })
+  }
+
+  /**
+   * Create event in groupe
+   */
+  createEventInGroupe () {
+    this.app.post('/groupe/create/event/:idgroupe', (req, res) => {
+      try {
+        this.GroupeModel.findById(req.params.idgroupe).then(groupe => {
+          if (groupe.autorisation_members === '1') {
+            if (groupe.moderators_ids.some(o => req.body.idsend.includes(o)) || groupe.administrators_id.some(o => req.body.idsend.includes(o)) || groupe.members_ids.some(o => req.body.idsend.includes(o))) {
+              const newEventGroupe = {
+                name: req.body.name,
+                description: req.body.description,
+                date_start: req.body.date_start,
+                date_end: req.body.date_end,
+                location: req.body.location,
+                status: 'public',
+                administrators_ids: req.body.administrators_ids,
+                groupe_ids: req.params.idgroupe
+              }
+              const eventModel = this.EventModel(newEventGroupe)
+              eventModel.save().then(newEventInGroupe => {
+                res.status(201).json({
+                  code: 201,
+                  message: 'success add new event in this groupe',
+                  sondage: newEventInGroupe
+                })
+              }).catch(err => {
+                res.status(500).json({
+                  code: 500,
+                  message: err
+                })
+              })
+            }
+          } else {
+            if (groupe.administrators_id.some(o => req.body.idsend.includes(o))) {
+              const newEventGroupe = {
+                name: req.body.name,
+                description: req.body.description,
+                date_start: req.body.date_start,
+                date_end: req.body.date_end,
+                location: req.body.location,
+                status: 'public',
+                administrators_ids: req.body.administrators_ids,
+                groupe_ids: req.params.idgroupe
+              }
+              const eventModel = this.EventModel(newEventGroupe)
+              eventModel.save().then(newEventInGroupe => {
+                res.status(201).json({
+                  code: 201,
+                  message: 'success add new event in this groupe',
+                  sondage: newEventInGroupe
+                })
+              }).catch(err => {
+                res.status(500).json({
+                  code: 500,
+                  message: err
+                })
+              })
+            }
+          }
+        }).catch(err => {
+          res.status(500).json({
+            code: 300,
+            message: err
+          })
         })
       } catch (err) {
         res.status(500).json({
