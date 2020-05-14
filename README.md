@@ -1,4 +1,4 @@
-## api-Soscial-network
+# API Soscial Network
 here is a social network api, my goal was to redo the facebook api with a pdf of the functional needs of the new API
 
 ### Requirements
