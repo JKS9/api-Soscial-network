@@ -52,39 +52,45 @@ class Conversation {
                     conversation_id: conversation.id
                   }
                   this.GroupeModel.findByIdAndUpdate(conversation.id_groupe, idconversation).then(groupeUpdate => {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'conversation creer avec succès'
+                    res.status(201).json({
+                      code: 201,
+                      message: 'success create conversation'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 500,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'save conversation failed'
+                      })
+                    }
                   })
                 }).catch(err => {
-                  res.status(500).json({
-                    code: 500,
-                    message: err
-                  })
+                  if (err) {
+                    res.status(403).json({
+                      code: 403,
+                      message: 'save conversation failed'
+                    })
+                  }
                 })
               } else {
-                res.status(200).json({
-                  code: 200,
-                  message: 'vous avez pas la permission de creer une discution'
+                res.status(403).json({
+                  code: 403,
+                  message: 'you dont have a permission'
                 })
               }
             } else {
-              res.status(200).json({
-                code: 200,
-                message: 'ce groupe apartient déja une conversation'
+              res.status(403).json({
+                code: 403,
+                message: 'this groupe belongs to a group that already has a conversation'
               })
             }
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(403).json({
+                code: 403,
+                message: 'groupe not found'
+              })
+            }
           })
         } else if (req.body.status === 'event') {
           this.EventModel.findById(req.body.id).then(event => {
@@ -101,32 +107,36 @@ class Conversation {
                     }
 
                     this.EventModel.findByIdAndUpdate(conversation.id_event, idconversation).then(eventid => {
-                      res.status(200).json({
-                        code: 200,
-                        message: 'conversation creer avec succès'
+                      res.status(201).json({
+                        code: 201,
+                        message: 'success create conversation'
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 500,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'save conversation failed'
+                        })
+                      }
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 222,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'save conversation failed'
+                      })
+                    }
                   })
                 } else {
-                  res.status(200).json({
-                    code: 200,
-                    message: 'vous avez pas la permission de creer une discution'
+                  res.status(403).json({
+                    code: 403,
+                    message: 'you dont have a permission'
                   })
                 }
               } else {
-                res.status(200).json({
-                  code: 200,
-                  message: 'cette evenement apartient déja une conversation'
+                res.status(403).json({
+                  code: 403,
+                  message: 'this event belongs to a group that already has a conversation'
                 })
               }
             } else {
@@ -143,53 +153,63 @@ class Conversation {
                       }
 
                       this.GroupeModel.findOneAndUpdate(groupe.id, idconversation).then(groupeUpdate => {
-                        res.status(200).json({
-                          code: 200,
-                          message: 'conversation creer avec succès'
+                        res.status(201).json({
+                          code: 201,
+                          message: 'success create conversation'
                         })
                       }).catch(err => {
-                        res.status(500).json({
-                          code: 500,
-                          message: err
-                        })
+                        if (err) {
+                          res.status(403).json({
+                            code: 403,
+                            message: 'save conversation failed'
+                          })
+                        }
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 500,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'save conversation failed'
+                        })
+                      }
                     })
                   } else {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'vous avez pas la permission de creer une discution'
+                    res.status(403).json({
+                      code: 403,
+                      message: 'you dont have a permission'
                     })
                   }
                 } else {
-                  res.status(200).json({
-                    code: 200,
-                    message: 'cette evenement apartient à un groupe qui posséde déja une conversation'
+                  res.status(403).json({
+                    code: 403,
+                    message: 'this event belongs to a group that already has a conversation'
                   })
                 }
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(403).json({
+                    code: 403,
+                    message: 'parent not found'
+                  })
+                }
               })
             }
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(403).json({
+                code: 403,
+                message: 'event not found'
+              })
+            }
           })
         }
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -211,15 +231,17 @@ class Conversation {
                 }
                 const messageModel = this.MessageModel(message)
                 messageModel.save().then(() => {
-                  res.status(200).json({
-                    code: 200,
-                    message: 'message envoyer avec succés'
+                  res.status(201).json({
+                    code: 201,
+                    message: 'success add message'
                   })
                 }).catch(err => {
-                  res.status(500).json({
-                    code: 300,
-                    message: err
-                  })
+                  if (err) {
+                    res.status(403).json({
+                      code: 403,
+                      message: 'add message failed'
+                    })
+                  }
                 })
               } else {
                 if (groupe.moderators_ids.some(o => req.body.idsend.includes(o))) {
@@ -230,15 +252,17 @@ class Conversation {
                   }
                   const messageModel = this.MessageModel(message)
                   messageModel.save().then(() => {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'message envoyer avec succés'
+                    res.status(201).json({
+                      code: 201,
+                      message: 'success add message'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'add message failed'
+                      })
+                    }
                   })
                 } else {
                   if (groupe.members_ids.some(o => req.body.idsend.includes(o))) {
@@ -249,35 +273,39 @@ class Conversation {
                     }
                     const messageModel = this.MessageModel(message)
                     messageModel.save().then(() => {
-                      res.status(200).json({
-                        code: 200,
-                        message: 'message envoyer avec succés'
+                      res.status(201).json({
+                        code: 201,
+                        message: 'success add message'
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 300,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'add message failed'
+                        })
+                      }
                     })
                   } else {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'vous ne faite pas partie du groupe'
+                    res.status(403).json({
+                      code: 403,
+                      message: 'you dont have a permission'
                     })
                   }
                 }
               }
             } else {
-              res.status(200).json({
-                code: 200,
-                message: 'votre groupe na pas de discution, veuillez en créer une'
+              res.status(403).json({
+                code: 403,
+                message: 'your group has no discussion, please create one'
               })
             }
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(403).json({
+                code: 403,
+                message: 'groupe not found'
+              })
+            }
           })
         } else if (req.body.status === 'event') {
           this.EventModel.findById(req.body.id).then(event => {
@@ -291,15 +319,17 @@ class Conversation {
                   }
                   const messageModel = this.MessageModel(message)
                   messageModel.save().then(() => {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'message envoyer avec succés'
+                    res.status(201).json({
+                      code: 201,
+                      message: 'success add message'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'add message failed'
+                      })
+                    }
                   })
                 } else {
                   if (event.moderators_ids.some(o => req.body.idsend.includes(o))) {
@@ -310,15 +340,17 @@ class Conversation {
                     }
                     const messageModel = this.MessageModel(message)
                     messageModel.save().then(() => {
-                      res.status(200).json({
-                        code: 200,
-                        message: 'message envoyer avec succés'
+                      res.status(201).json({
+                        code: 201,
+                        message: 'success add message'
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 300,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'add message failed'
+                        })
+                      }
                     })
                   } else {
                     if (event.members_ids.some(o => req.body.idsend.includes(o))) {
@@ -329,28 +361,30 @@ class Conversation {
                       }
                       const messageModel = this.MessageModel(message)
                       messageModel.save().then(() => {
-                        res.status(200).json({
-                          code: 200,
-                          message: 'message envoyer avec succés'
+                        res.status(201).json({
+                          code: 201,
+                          message: 'success add message'
                         })
                       }).catch(err => {
-                        res.status(500).json({
-                          code: 300,
-                          message: err
-                        })
+                        if (err) {
+                          res.status(403).json({
+                            code: 403,
+                            message: 'add message failed'
+                          })
+                        }
                       })
                     } else {
-                      res.status(200).json({
-                        code: 200,
-                        message: 'vous ne faite pas partie de l event'
+                      res.status(403).json({
+                        code: 403,
+                        message: 'you dont have a permission'
                       })
                     }
                   }
                 }
               } else {
-                res.status(200).json({
-                  code: 200,
-                  message: 'votre event na pas de discution, veuillez en créer une'
+                res.status(403).json({
+                  code: 403,
+                  message: 'your group has no discussion, please create one'
                 })
               }
             } else {
@@ -364,15 +398,17 @@ class Conversation {
                     }
                     const messageModel = this.MessageModel(message)
                     messageModel.save().then(() => {
-                      res.status(200).json({
-                        code: 200,
-                        message: 'message envoyer avec succés'
+                      res.status(201).json({
+                        code: 201,
+                        message: 'success add message'
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 300,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'add message failed'
+                        })
+                      }
                     })
                   } else {
                     if (groupe.moderators_ids.some(o => req.body.idsend.includes(o))) {
@@ -383,15 +419,17 @@ class Conversation {
                       }
                       const messageModel = this.MessageModel(message)
                       messageModel.save().then(() => {
-                        res.status(200).json({
-                          code: 200,
-                          message: 'message envoyer avec succés'
+                        res.status(201).json({
+                          code: 201,
+                          message: 'success add message'
                         })
                       }).catch(err => {
-                        res.status(500).json({
-                          code: 300,
-                          message: err
-                        })
+                        if (err) {
+                          res.status(403).json({
+                            code: 403,
+                            message: 'add message failed'
+                          })
+                        }
                       })
                     } else {
                       if (groupe.members_ids.some(o => req.body.idsend.includes(o))) {
@@ -402,54 +440,62 @@ class Conversation {
                         }
                         const messageModel = this.MessageModel(message)
                         messageModel.save().then(() => {
-                          res.status(200).json({
-                            code: 200,
-                            message: 'message envoyer avec succés'
+                          res.status(201).json({
+                            code: 201,
+                            message: 'success add message'
                           })
                         }).catch(err => {
-                          res.status(500).json({
-                            code: 300,
-                            message: err
-                          })
+                          if (err) {
+                            res.status(403).json({
+                              code: 403,
+                              message: 'add message failed'
+                            })
+                          }
                         })
                       } else {
-                        res.status(200).json({
-                          code: 200,
-                          message: 'vous ne faite pas partie du groupe'
+                        res.status(403).json({
+                          code: 403,
+                          message: 'you dont have a permission'
                         })
                       }
                     }
                   }
                 } else {
-                  res.status(200).json({
-                    code: 200,
-                    message: 'votre groupe na pas de discution, veuillez en créer une'
+                  res.status(403).json({
+                    code: 403,
+                    message: 'your group has no discussion, please create one'
                   })
                 }
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(403).json({
+                    code: 403,
+                    message: 'parent not found'
+                  })
+                }
               })
             }
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(403).json({
+                code: 403,
+                message: 'parent not found'
+              })
+            }
           })
         } else {
-          res.status(200).json({
-            code: 200,
-            message: 'statu incorrecte'
+          res.status(403).json({
+            code: 403,
+            message: 'status invalide'
           })
         }
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -472,15 +518,17 @@ class Conversation {
                   }
                   const commentaireModel = this.CommentaireModel(commentaire)
                   commentaireModel.save().then(() => {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'commentaire envoyer avec succés'
+                    res.status(201).json({
+                      code: 201,
+                      message: 'success add commentaire'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'add commentaire failed'
+                      })
+                    }
                   })
                 } else if (event.moderators_ids.some(o => req.body.idsend.includes(o))) {
                   const commentaire = {
@@ -490,15 +538,17 @@ class Conversation {
                   }
                   const commentaireModel = this.CommentaireModel(commentaire)
                   commentaireModel.save().then(() => {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'commentaire envoyer avec succés'
+                    res.status(201).json({
+                      code: 201,
+                      message: 'success add commentaire'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'add commentaire failed'
+                      })
+                    }
                   })
                 } else if (event.members_ids.some(o => req.body.idsend.includes(o))) {
                   const commentaire = {
@@ -508,27 +558,31 @@ class Conversation {
                   }
                   const commentaireModel = this.CommentaireModel(commentaire)
                   commentaireModel.save().then(() => {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'commentaire envoyer avec succés'
+                    res.status(201).json({
+                      code: 201,
+                      message: 'success add commentaire'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'add commentaire failed'
+                      })
+                    }
                   })
                 } else {
-                  res.status(200).json({
-                    code: 200,
-                    message: 'vous ne pouvez commanter ce message'
+                  res.status(403).json({
+                    code: 403,
+                    message: 'you dont have a permission'
                   })
                 }
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(403).json({
+                    code: 403,
+                    message: 'parent not found'
+                  })
+                }
               })
             } else if (conversation.id_groupe) {
               this.GroupeModel.findById(conversation.id_groupe).then(groupe => {
@@ -540,15 +594,17 @@ class Conversation {
                   }
                   const commentaireModel = this.CommentaireModel(commentaire)
                   commentaireModel.save().then(() => {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'commentaire envoyer avec succés'
+                    res.status(201).json({
+                      code: 201,
+                      message: 'success add commentaire'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'add commentaire failed'
+                      })
+                    }
                   })
                 } else if (groupe.moderators_ids.some(o => req.body.idsend.includes(o))) {
                   const commentaire = {
@@ -558,15 +614,17 @@ class Conversation {
                   }
                   const commentaireModel = this.CommentaireModel(commentaire)
                   commentaireModel.save().then(() => {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'commentaire envoyer avec succés'
+                    res.status(201).json({
+                      code: 201,
+                      message: 'success add commentaire'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'add commentaire failed'
+                      })
+                    }
                   })
                 } else if (groupe.members_ids.some(o => req.body.idsend.includes(o))) {
                   const commentaire = {
@@ -576,46 +634,56 @@ class Conversation {
                   }
                   const commentaireModel = this.CommentaireModel(commentaire)
                   commentaireModel.save().then(() => {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'commentaire envoyer avec succés'
+                    res.status(201).json({
+                      code: 201,
+                      message: 'success add commentaire'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'add commentaire failed'
+                      })
+                    }
                   })
                 } else {
-                  res.status(200).json({
-                    code: 200,
-                    message: 'vous ne pouvez commanter ce message'
+                  res.status(403).json({
+                    code: 403,
+                    message: 'you dont have a permission'
                   })
                 }
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(403).json({
+                    code: 403,
+                    message: 'parent of poll not found'
+                  })
+                }
               })
             }
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(403).json({
+                code: 403,
+                message: 'parent of poll not found'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'parent of poll not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -633,44 +701,52 @@ class Conversation {
                 this.MessageModel.find({ id_conversation: req.params.id }).then(message => {
                   res.status(200).json(message || {})
                 }).catch(err => {
-                  res.status(500).json({
-                    code: 300,
-                    message: err
-                  })
+                  if (err) {
+                    res.status(403).json({
+                      code: 403,
+                      message: 'show commentaire failed'
+                    })
+                  }
                 })
               } else {
                 if (event.moderators_ids.some(o => req.params.idsend.includes(o))) {
                   this.MessageModel.find({ id_conversation: req.params.id }).then(message => {
                     res.status(200).json(message || {})
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'show commentaire failed'
+                      })
+                    }
                   })
                 } else {
                   if (event.members_ids.some(o => req.params.idsend.includes(o))) {
                     this.MessageModel.find({ id_conversation: req.params.id }).then(message => {
                       res.status(200).json(message || {})
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 300,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'show commentaire failed'
+                        })
+                      }
                     })
                   } else {
-                    res.status(300).json({
-                      code: 300,
-                      message: 'vous ne pouvez voir cette conversation'
+                    res.status(403).json({
+                      code: 403,
+                      message: 'you dont have a permission'
                     })
                   }
                 }
               }
             }).catch(err => {
-              res.status(500).json({
-                code: 300,
-                message: err
-              })
+              if (err) {
+                res.status(400).json({
+                  code: 400,
+                  message: 'parent of poll not found'
+                })
+              }
             })
           } else if (conversation.id_groupe) {
             this.GroupeModel.findById(conversation.id_groupe).then(groupe => {
@@ -678,57 +754,69 @@ class Conversation {
                 this.MessageModel.find({ id_conversation: req.params.id }).then(message => {
                   res.status(200).json(message || {})
                 }).catch(err => {
-                  res.status(500).json({
-                    code: 300,
-                    message: err
-                  })
+                  if (err) {
+                    res.status(403).json({
+                      code: 403,
+                      message: 'show commentaire failed'
+                    })
+                  }
                 })
               } else {
                 if (groupe.moderators_ids.some(o => req.params.idsend.includes(o))) {
                   this.MessageModel.find({ id_conversation: req.params.id }).then(message => {
                     res.status(200).json(message || {})
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'show commentaire failed'
+                      })
+                    }
                   })
                 } else {
                   if (groupe.members_ids.some(o => req.params.idsend.includes(o))) {
                     this.MessageModel.find({ id_conversation: req.params.id }).then(message => {
                       res.status(200).json(message || {})
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 300,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'show conversation failed'
+                        })
+                      }
                     })
                   } else {
-                    res.status(300).json({
-                      code: 300,
-                      message: 'vous ne pouvez voir cette conversation'
+                    res.status(403).json({
+                      code: 403,
+                      message: 'you dont have a permission'
                     })
                   }
                 }
               }
             }).catch(err => {
-              res.status(500).json({
-                code: 300,
-                message: err
-              })
+              if (err) {
+                res.status(400).json({
+                  code: 400,
+                  message: 'parent of poll not found'
+                })
+              }
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 300,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'conversation not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -747,44 +835,52 @@ class Conversation {
                   this.CommentaireModel.find({ id_message: req.params.idmessage }).then(commentaire => {
                     res.status(200).json(commentaire || {})
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'show commentaire failed'
+                      })
+                    }
                   })
                 } else {
                   if (conversation.moderators_ids.some(o => req.params.idsend.includes(o))) {
                     this.CommentaireModel.find({ id_message: req.params.idmessage }).then(commentaire => {
                       res.status(200).json(commentaire || {})
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 300,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'show commentaire failed'
+                        })
+                      }
                     })
                   } else {
                     if (conversation.members_ids.some(o => req.params.idsend.includes(o))) {
                       this.CommentaireModel.find({ id_message: req.params.idmessage }).then(commentaire => {
                         res.status(200).json(commentaire || {})
                       }).catch(err => {
-                        res.status(500).json({
-                          code: 300,
-                          message: err
-                        })
+                        if (err) {
+                          res.status(403).json({
+                            code: 403,
+                            message: 'show commentaire failed'
+                          })
+                        }
                       })
                     } else {
-                      res.status(300).json({
-                        code: 300,
-                        message: 'vous ne pouvez voir cette conversation'
+                      res.status(403).json({
+                        code: 403,
+                        message: 'you dont have a permission'
                       })
                     }
                   }
                 }
               }).catch(err => {
-                res.status(500).json({
-                  code: 300,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'parent of poll not found'
+                  })
+                }
               })
             } else if (conversation.id_groupe) {
               this.EventModel.findById(conversation.id_event).then(event => {
@@ -792,63 +888,77 @@ class Conversation {
                   this.CommentaireModel.find({ id_message: req.params.idmessage }).then(commentaire => {
                     res.status(200).json(commentaire || {})
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'show commentaire failed'
+                      })
+                    }
                   })
                 } else {
                   if (conversation.moderators_ids.some(o => req.params.idsend.includes(o))) {
                     this.CommentaireModel.find({ id_message: req.params.idmessage }).then(commentaire => {
                       res.status(200).json(commentaire || {})
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 300,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'show commentaire failed'
+                        })
+                      }
                     })
                   } else {
                     if (conversation.members_ids.some(o => req.params.idsend.includes(o))) {
                       this.CommentaireModel.find({ id_message: req.params.idmessage }).then(commentaire => {
                         res.status(200).json(commentaire || {})
                       }).catch(err => {
-                        res.status(500).json({
-                          code: 300,
-                          message: err
-                        })
+                        if (err) {
+                          res.status(403).json({
+                            code: 403,
+                            message: 'show commentaire failed'
+                          })
+                        }    
                       })
                     } else {
-                      res.status(300).json({
-                        code: 300,
-                        message: 'vous ne pouvez voir cette conversation'
+                      res.status(403).json({
+                        code: 403,
+                        message: 'you dont have a permission'
                       })
                     }
                   }
                 }
               }).catch(err => {
-                res.status(500).json({
-                  code: 300,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'parent of poll not found'
+                  })
+                }
               })
             }
           }).catch(err => {
-            res.status(500).json({
-              code: 300,
-              message: err
-            })
+            if (err) {
+              res.status(400).json({
+                code: 400,
+                message: 'parent of poll not found'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 300,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'messgae not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(500).json({
+            code: 500,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -866,130 +976,154 @@ class Conversation {
                 if (event.administrators_ids.some(o => req.params.idsend.includes(o))) {
                   this.MessageModel.findByIdAndRemove(req.params.idmessage).then(deleteMessage => {
                     this.CommentaireModel.findAndRemove({id_message: req.params.idmessage}).then(deleteCommentaire => {
-                      res.status(200).json({
-                        code: 200,
+                      res.status(201).json({
+                        code: 201,
                         message: 'message delete'
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 500,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'delete message failed'
+                        })
+                      }
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 500,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'delete message failed'
+                      })
+                    }
                   })
                 } else {
                   if (event.moderators_ids.some(o => req.params.idsend.includes(o))) {
                     this.MessageModel.findByIdAndRemove(req.params.idmessage).then(deleteMessage => {
-                      res.status(200).json({
-                        code: 200,
-                        message: deleteMessage
+                      res.status(201).json({
+                        code: 201,
+                        message: 'success delete message'
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 500,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'delete message failed'
+                        })
+                      }
                     })
                   } else if (message.id_user === req.params.idsend) {
                     this.MessageModel.findByIdAndRemove(req.params.idmessage).then(deleteMessage => {
-                      res.status(200).json({
-                        code: 200,
-                        message: deleteMessage
+                      res.status(201).json({
+                        code: 201,
+                        message: 'success delete message'
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 500,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'delete message failed'
+                        })
+                      }
                     })
                   } else {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'vous ne pouvez pas supprimer ce message'
+                    res.status(403).json({
+                      code: 403,
+                      message: 'you dont have a permission'
                     })
                   }
                 }
               }).catch(err => {
-                res.status(500).json({
-                  code: 300,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'parent of poll not found'
+                  })
+                }
               })
             } else if (conversation.id_groupe) {
               this.GroupeModel.findById(conversation.id_groupe).then(groupe => {
                 if (groupe.administrators_id.some(o => req.params.idsend.includes(o))) {
                   this.MessageModel.findByIdAndRemove(req.params.idmessage).then(deleteMessage => {
-                    res.status(200).json({
-                      code: 200,
-                      message: deleteMessage
+                    res.status(201).json({
+                      code: 201,
+                      message: 'success delete message'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 500,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'delete message failed'
+                      })
+                    }
                   })
                 } else {
                   if (groupe.moderators_ids.some(o => req.params.idsend.includes(o))) {
                     this.MessageModel.findByIdAndRemove(req.params.idmessage).then(deleteMessage => {
-                      res.status(200).json({
-                        code: 200,
-                        message: deleteMessage
+                      res.status(201).json({
+                        code: 201,
+                        message: 'success delete message'
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 500,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'delete message failed'
+                        })
+                      }
                     })
                   } else if (message.id_user === req.params.idsend) {
                     this.MessageModel.findByIdAndRemove(req.params.idmessage).then(deleteMessage => {
-                      res.status(200).json({
-                        code: 200,
-                        message: deleteMessage
+                      res.status(201).json({
+                        code: 201,
+                        message: 'success delete message'
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 500,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'delete message failed'
+                        })
+                      }
                     })
                   } else {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'vous ne pouvez pas supprimer ce message'
+                    res.status(403).json({
+                      code: 403,
+                      message: 'you dont have a permission'
                     })
                   }
                 }
               }).catch(err => {
-                res.status(500).json({
-                  code: 300,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'parent of poll not found'
+                  })
+                }
               })
             }
           }).catch(err => {
-            res.status(500).json({
-              code: 300,
-              message: err
-            })
+            if (err) {
+              res.status(400).json({
+                code: 400,
+                message: 'parent of poll not found'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 300,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'message not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -1001,20 +1135,20 @@ class Conversation {
     this.app.delete('/conversation/commentaire/:idcommentaire/:idsend', (req, res) => {
       try {
         this.CommentaireModel.findById(req.params.idcommentaire).then(commentaire => {
-          console.log('1')
           this.MessageModel.findById(commentaire.id_message).then(message => {
-            console.log(message)
             if (message === null) {
               this.CommentaireModel.findByIdAndRemove(req.params.idcommentaire).then(commentaires => {
-                res.status(200).json({
-                  code: 200,
-                  message: 'commentaire supprimer, car aucun message parent na été trouvé'
+                res.status(201).json({
+                  code: 201,
+                  message: 'success scommentaire delete'
                 })
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(403).json({
+                    code: 403,
+                    message: 'delete commentaire failed'
+                  })
+                }
               })
             } else {
               this.ConversationModel.findById(message.id_conversation).then(conversation => {
@@ -1022,131 +1156,155 @@ class Conversation {
                   this.EventModel.findById(conversation.id_event).then(event => {
                     if (event.administrators_ids.some(o => req.params.idsend.includes(o))) {
                       this.CommentaireModel.findByIdAndRemove(req.params.idcommentaire).then(commentaires => {
-                        res.status(200).json({
-                          code: 200,
-                          message: 'commentaire supprimer'
+                        res.status(201).json({
+                          code: 201,
+                          message: 'success scommentaire delete'
                         })
                       }).catch(err => {
-                        res.status(500).json({
-                          code: 500,
-                          message: err
-                        })
+                        if (err) {
+                          res.status(403).json({
+                            code: 403,
+                            message: 'delete commentaire failed'
+                          })
+                        }
                       })
                     } else {
                       if (event.moderators_ids.some(o => req.params.idsend.includes(o))) {
                         this.CommentaireModel.findByIdAndRemove(req.params.idcommentaire).then(commentaires => {
-                          res.status(200).json({
-                            code: 200,
-                            message: 'commentaire supprimer'
+                          res.status(201).json({
+                            code: 201,
+                            message: 'success scommentaire delete'
                           })
                         }).catch(err => {
-                          res.status(500).json({
-                            code: 500,
-                            message: err
-                          })
+                          if (err) {
+                            res.status(403).json({
+                              code: 403,
+                              message: 'delete commentaire failed'
+                            })
+                          }
                         })
                       } else if (commentaire.id_sende === req.params.idsend) {
                         this.CommentaireModel.findByIdAndRemove(req.params.idcommentaire).then(commentaires => {
-                          res.status(200).json({
-                            code: 200,
-                            message: 'commentaire supprimer'
+                          res.status(201).json({
+                            code: 201,
+                            message: 'success scommentaire delete'
                           })
                         }).catch(err => {
-                          res.status(500).json({
-                            code: 500,
-                            message: err
-                          })
+                          if (err) {
+                            res.status(403).json({
+                              code: 403,
+                              message: 'delete commentaire failed'
+                            })
+                          }
                         })
                       } else {
-                        res.status(200).json({
-                          code: 200,
-                          message: 'vous ne pouvez pas supprimer ce commentaire'
+                        res.status(403).json({
+                          code: 403,
+                          message: 'you dont have a permission'
                         })
                       }
                     }
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 500,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(400).json({
+                        code: 400,
+                        message: 'parent not found'
+                      })
+                    }
                   })
                 } else if (conversation.id_groupe) {
                   this.GroupeModel.findById(conversation.id_groupe).then(groupe => {
                     if (groupe.administrators_id.some(o => req.params.idsend.includes(o))) {
                       this.CommentaireModel.findByIdAndRemove(req.params.idcommentaire).then(commentaires => {
-                        res.status(200).json({
-                          code: 200,
-                          message: 'commentaire supprimer'
+                        res.status(201).json({
+                          code: 201,
+                          message: 'success scommentaire delete'
                         })
                       }).catch(err => {
-                        res.status(500).json({
-                          code: 500,
-                          message: err
-                        })
+                        if (err) {
+                          res.status(403).json({
+                            code: 403,
+                            message: 'delete commentaire failed'
+                          })
+                        }
                       })
                     } else {
                       if (groupe.moderators_ids.some(o => req.params.idsend.includes(o))) {
                         this.CommentaireModel.findByIdAndRemove(req.params.idcommentaire).then(commentaires => {
-                          res.status(200).json({
-                            code: 200,
-                            message: 'commentaire supprimer'
+                          res.status(201).json({
+                            code: 201,
+                            message: 'success scommentaire delete'
                           })
                         }).catch(err => {
-                          res.status(500).json({
-                            code: 500,
-                            message: err
-                          })
+                          if (err) {
+                            res.status(403).json({
+                              code: 403,
+                              message: 'delete commentaire failed'
+                            })
+                          }
                         })
                       } else if (commentaire.id_sende === req.params.idsend) {
                         this.CommentaireModel.findByIdAndRemove(req.params.idcommentaire).then(commentaires => {
-                          res.status(200).json({
-                            code: 200,
-                            message: 'commentaire supprimer'
+                          res.status(201).json({
+                            code: 201,
+                            message: 'success scommentaire delete'
                           })
                         }).catch(err => {
-                          res.status(500).json({
-                            code: 500,
-                            message: err
-                          })
+                          if (err) {
+                            res.status(403).json({
+                              code: 403,
+                              message: 'delete commentaire failed'
+                            })
+                          }
                         })
                       } else {
-                        res.status(200).json({
-                          code: 200,
-                          message: 'vous ne pouvez pas supprimer ce commentaire'
+                        res.status(403).json({
+                          code: 403,
+                          message: 'you dont have permission'
                         })
                       }
                     }
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 500,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(400).json({
+                        code: 400,
+                        message: 'parent of poll not found'
+                      })
+                    }
                   })
                 }
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'parent of poll not found'
+                  })
+                }
               })
             }
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(400).json({
+                code: 400,
+                message: 'parent of poll not found'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(500).json({
+              code: 500,
+              message: 'commentaire not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(500).json({
+            code: 500,
+            message: 'bad request'
+          })
+        }
       }
     })
   }

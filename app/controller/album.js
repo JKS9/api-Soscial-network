@@ -55,27 +55,33 @@ class Album {
                   }
                   const albumPhotoModel = this.AlbumPhotoModel(newPhoto)
                   albumPhotoModel.save().then(album => {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'photo ajouter à l album'
+                    res.status(201).json({
+                      code: 201,
+                      message: 'success add picture in album'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'add picture failed'
+                      })
+                    }
                   })
                 }).catch(err => {
-                  res.status(500).json({
-                    code: 300,
-                    message: err
-                  })
+                  if (err) {
+                    res.status(403).json({
+                      code: 403,
+                      message: 'add picture failed'
+                    })
+                  }
                 })
               }).catch(err => {
-                res.status(500).json({
-                  code: 200,
-                  message: err
-                })
+                if (err) {
+                  res.status(403).json({
+                    code: 403,
+                    message: 'add album failed'
+                  })
+                }
               })
             } else {
               if (event.moderators_ids.some(o => req.body.idsend.includes(o))) {
@@ -95,27 +101,33 @@ class Album {
                     }
                     const albumPhotoModel = this.AlbumPhotoModel(newPhoto)
                     albumPhotoModel.save().then(album => {
-                      res.status(200).json({
-                        code: 200,
-                        message: 'photo ajouter à l album'
+                      res.status(201).json({
+                        code: 201,
+                        message: 'success add picture in album'
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 300,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'add picture failed'
+                        })
+                      }
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'add album failed'
+                      })
+                    }
                   })
                 }).catch(err => {
-                  res.status(500).json({
-                    code: 200,
-                    message: err
-                  })
+                  if (err) {
+                    res.status(403).json({
+                      code: 403,
+                      message: 'add album failed'
+                    })
+                  }
                 })
               } else {
                 if (event.members_ids.some(o => req.body.idsend.includes(o))) {
@@ -135,32 +147,38 @@ class Album {
                       }
                       const albumPhotoModel = this.AlbumPhotoModel(newPhoto)
                       albumPhotoModel.save().then(album => {
-                        res.status(200).json({
-                          code: 200,
-                          message: 'photo ajouter à l album'
+                        res.status(201).json({
+                          code: 201,
+                          message: 'success add picture in album'
                         })
                       }).catch(err => {
-                        res.status(500).json({
-                          code: 300,
-                          message: err
-                        })
+                        if (err) {
+                          res.status(403).json({
+                            code: 403,
+                            message: 'add picture failed'
+                          })
+                        }
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 300,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'add picture failed'
+                        })
+                      }
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 200,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'add album failed'
+                      })
+                    }
                   })
                 } else {
-                  res.status(500).json({
-                    code: 500,
-                    message: 'vous ne pouvez pas ajouter de photo à cette event'
+                  res.status(403).json({
+                    code: 403,
+                    message: 'you dont have a permission'
                   })
                 }
               }
@@ -175,21 +193,25 @@ class Album {
                 }
                 const albumPhotoModel = this.AlbumPhotoModel(newPhoto)
                 albumPhotoModel.save().then(album => {
-                  res.status(200).json({
-                    code: 200,
-                    message: 'photo ajouter à l album'
+                  res.status(201).json({
+                    code: 201,
+                    message: 'success add picture in album'
                   })
                 }).catch(err => {
-                  res.status(500).json({
-                    code: 300,
-                    message: err
-                  })
+                  if (err) {
+                    res.status(403).json({
+                      code: 403,
+                      message: 'add picture failed'
+                    })
+                  }
                 })
               }).catch(err => {
-                res.status(500).json({
-                  code: 300,
-                  message: err
-                })
+                if (err) {
+                  res.status(403).json({
+                    code: 403,
+                    message: 'album not found'
+                  })
+                }
               })
             } else {
               if (event.moderators_ids.some(o => req.body.idsend.includes(o))) {
@@ -201,21 +223,25 @@ class Album {
                   }
                   const albumPhotoModel = this.AlbumPhotoModel(newPhoto)
                   albumPhotoModel.save().then(album => {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'photo ajouter à l album'
+                    res.status(201).json({
+                      code: 201,
+                      message: 'success add picture in album'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'add picture failed'
+                      })
+                    }
                   })
                 }).catch(err => {
-                  res.status(500).json({
-                    code: 300,
-                    message: err
-                  })
+                  if (err) {
+                    res.status(403).json({
+                      code: 403,
+                      message: 'album not found'
+                    })
+                  }
                 })
               } else {
                 if (event.members_ids.some(o => req.body.idsend.includes(o))) {
@@ -227,42 +253,50 @@ class Album {
                     }
                     const albumPhotoModel = this.AlbumPhotoModel(newPhoto)
                     albumPhotoModel.save().then(album => {
-                      res.status(200).json({
-                        code: 200,
-                        message: 'photo ajouter à l album'
+                      res.status(201).json({
+                        code: 201,
+                        message: 'success add picture in album'
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 300,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'add picture failed'
+                        })
+                      }
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'album not found'
+                      })
+                    }
                   })
                 } else {
-                  res.status(500).json({
-                    code: 500,
-                    message: 'vous ne pouvez pas ajouter de photo à cette event'
+                  res.status(403).json({
+                    code: 403,
+                    message: 'you dont have a permission'
                   })
                 }
               }
             }
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'event not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -281,10 +315,12 @@ class Album {
                 message: albumPhoto
               })
             }).catch(err => {
-              res.status(500).json({
-                code: 500,
-                message: err
-              })
+              if (err) {
+                res.status(403).json({
+                  code: 403,
+                  message: 'show album picture failed'
+                })
+              }
             }) 
           } else {
             if (event.administrators_ids.some(o => req.params.idsend.includes(o))) {
@@ -294,10 +330,12 @@ class Album {
                   message: albumPhoto
                 })
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(403).json({
+                    code: 403,
+                    message: 'show album picture failed'
+                  })
+                }
               }) 
             } else {
               if (event.moderators_ids.some(o => req.params.idsend.includes(o))) {
@@ -307,10 +345,12 @@ class Album {
                     message: albumPhoto
                   })
                 }).catch(err => {
-                  res.status(500).json({
-                    code: 500,
-                    message: err
-                  })
+                  if (err) {
+                    res.status(403).json({
+                      code: 403,
+                      message: 'show album picture failed'
+                    })
+                  }
                 }) 
               } else {
                 if (event.members_ids.some(o => req.params.idsend.includes(o))) {
@@ -320,31 +360,37 @@ class Album {
                       message: albumPhoto
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 500,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'show album picture failed'
+                      })
+                    }
                   }) 
                 } else {
-                  res.status(200).json({
-                    code: 200,
-                    message: 'vous ne pouvez voir les photo de cette event'
+                  res.status(403).json({
+                    code: 403,
+                    message: 'you dont have a permission'
                   })
                 }
               }
             }
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'event not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -357,7 +403,6 @@ class Album {
       try {
         this.AlbumPhotoModel.findById(req.params.idphoto).then(albumPhoto => {
           this.AlbumModel.findById(albumPhoto.id_album).then(album => {
-            console.log(album)
             this.EventModel.findById(album.id_event).then(event => {
               if (event.status === 'public') {
                 this.AlbumPhotoModel.findById(req.params.idphoto).then(albumPhoto => {
@@ -366,10 +411,12 @@ class Album {
                     message: albumPhoto
                   })
                 }).catch(err => {
-                  res.status(500).json({
-                    code: 500,
-                    message: err
-                  })
+                  if (err) {
+                    res.status(403).json({
+                      code: 403,
+                      message: 'show album picture failed'
+                    })
+                  }
                 }) 
               } else {
                 if (event.administrators_ids.some(o => req.params.idsend.includes(o))) {
@@ -379,10 +426,12 @@ class Album {
                       message: albumPhoto
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 500,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'show album picture failed'
+                      })
+                    }
                   }) 
                 } else {
                   if (event.moderators_ids.some(o => req.params.idsend.includes(o))) {
@@ -392,10 +441,12 @@ class Album {
                         message: albumPhoto
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 500,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'show album picture failed'
+                        })
+                      }
                     }) 
                   } else {
                     if (event.members_ids.some(o => req.params.idsend.includes(o))) {
@@ -405,43 +456,53 @@ class Album {
                           message: albumPhoto
                         })
                       }).catch(err => {
-                        res.status(500).json({
-                          code: 500,
-                          message: err
-                        })
+                        if (err) {
+                          res.status(403).json({
+                            code: 403,
+                            message: 'show album picture failed'
+                          })
+                        }
                       }) 
                     } else {
-                      res.status(200).json({
-                        code: 200,
-                        message: 'vous ne pouvez voir les photo de cette event'
+                      res.status(403).json({
+                        code: 403,
+                        message: 'you dont have a permission'
                       })
                     }
                   }
                 }
               }
             }).catch(err => {
-              res.status(500).json({
-                code: 500,
-                message: err
-              })
+              if (err) {
+                res.status(400).json({
+                  code: 400,
+                  message: 'parent not found'
+                })
+              }
             })
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(400).json({
+                code: 400,
+                message: 'parent not found'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'album photo not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(403).json({
+            code: 403,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -463,15 +524,17 @@ class Album {
                 }
                 const CommentairePhoto = this.CommentairePhotoModel(newPhotoCommentaire)
                 CommentairePhoto.save().then(commentairePhoto => {
-                  res.status(200).json({
-                    code: 200,
-                    message: 'commentaire ajouter'
+                  res.status(201).json({
+                    code: 201,
+                    message: 'success add commentaire'
                   })
                 }).catch(err => {
-                  res.status(500).json({
-                    code: 300,
-                    message: err
-                  })
+                  if (err) {
+                    res.status(403).json({
+                      code: 403,
+                      message: 'add commentaire failed'
+                    })
+                  }
                 })
               } else {
                 if (event.moderators_ids.some(o => req.body.idsend.includes(o))) {
@@ -482,15 +545,17 @@ class Album {
                   }
                   const CommentairePhoto = this.CommentairePhotoModel(newPhotoCommentaire)
                   CommentairePhoto.save().then(album => {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'commentaire ajouter'
+                    res.status(201).json({
+                      code: 201,
+                      message: 'success add commentaire'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 300,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'add commentaire failed'
+                      })
+                    }
                   })
                 } else {
                   if (event.members_ids.some(o => req.body.idsend.includes(o))) {
@@ -501,47 +566,57 @@ class Album {
                     }
                     const CommentairePhoto = this.CommentairePhotoModel(newPhotoCommentaire)
                     CommentairePhoto.save().then(album => {
-                      res.status(200).json({
-                        code: 200,
-                        message: 'commentaire ajouter'
+                      res.status(201).json({
+                        code: 201,
+                        message: 'success add commentaire'
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 300,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'add commentaire failed'
+                        })
+                      }
                     })
                   } else {
-                    res.status(500).json({
-                      code: 500,
-                      message: 'vous ne pouvez commenter cette photo'
+                    res.status(403).json({
+                      code: 403,
+                      message: 'you dont have a permission'
                     })
                   }
                 }
               }
             }).catch(err => {
-              res.status(500).json({
-                code: 500,
-                message: err
-              })
+              if (err) {
+                res.status(400).json({
+                  code: 400,
+                  message: 'parent not found'
+                })
+              }
             })
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(400).json({
+                code: 400,
+                message: 'parent not found'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'album photo not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -558,15 +633,17 @@ class Album {
               this.EventModel.findById(album.id_event).then(event => {
                 if (event.administrators_ids.some(o => req.params.idsend.includes(o))) {
                   this.CommentairePhotoModel.findByIdAndRemove(req.params.idcommentaire).then(remove => {
-                    res.status(200).json({
-                      code: 200,
-                      message: 'commentaire delete'
+                    res.status(201).json({
+                      code: 201,
+                      message: 'success commentaire delete'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 500,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'delete commentaire failed'
+                      })
+                    }
                   })
                 } else {
                   if (event.moderators_ids.some(o => req.params.idsend.includes(o))) {
@@ -576,10 +653,12 @@ class Album {
                         message: 'commentaire delete'
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 500,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'delete commentaire failed'
+                        })
+                      }
                     })
                   } else {
                     if (commentairePhoto.id_send === req.params.idsend) {
@@ -589,48 +668,60 @@ class Album {
                           message: 'commentaire delete'
                         })
                       }).catch(err => {
-                        res.status(500).json({
-                          code: 500,
-                          message: err
-                        })
+                        if (err) {
+                          res.status(403).json({
+                            code: 403,
+                            message: 'delete commentaire failed'
+                          })
+                        }
                       })
                     } else {
-                      res.status(500).json({
-                        code: 500,
-                        message: 'vous ne pouvez pas delete ce commentaire'
+                      res.status(403).json({
+                        code: 403,
+                        message: 'you dont have a permission'
                       })
                     }
                   }
                 }
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(400).json({
+                    code: 400,
+                    message: 'parent not found'
+                  })
+                }
               })
             }).catch(err => {
-              res.status(500).json({
-                code: 500,
-                message: err
-              })
+              if (err) {
+                res.status(400).json({
+                  code: 400,
+                  message: 'parent not found'
+                })
+              }
             })
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(400).json({
+                code: 400,
+                message: 'parent not found'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'commentaire in picture not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -651,10 +742,12 @@ class Album {
                     message: 'picture delete'
                   })
                 }).catch(err => {
-                  res.status(500).json({
-                    code: 500,
-                    message: err
-                  })
+                  if (err) {
+                    res.status(403).json({
+                      code: 403,
+                      message: 'delete pictuer failed'
+                    })
+                  }
                 })
               } else {
                 if (event.moderators_ids.some(o => req.params.idsend.includes(o))) {
@@ -664,55 +757,67 @@ class Album {
                       message: 'picture delete'
                     })
                   }).catch(err => {
-                    res.status(500).json({
-                      code: 500,
-                      message: err
-                    })
+                    if (err) {
+                      res.status(403).json({
+                        code: 403,
+                        message: 'delete pictuer failed'
+                      })
+                    }
                   })
                 } else {
                   if (photo.id_user === req.params.idsend) {
                     this.AlbumPhotoModel.findByIdAndRemove(req.params.idphoto).then(remove => {
-                      res.status(200).json({
-                        code: 200,
-                        message: 'picture delete'
+                      res.status(201).json({
+                        code: 201,
+                        message: 'success picture delete'
                       })
                     }).catch(err => {
-                      res.status(500).json({
-                        code: 500,
-                        message: err
-                      })
+                      if (err) {
+                        res.status(403).json({
+                          code: 403,
+                          message: 'delete pictuer failed'
+                        })
+                      }
                     })
                   } else {
-                    res.status(500).json({
-                      code: 500,
-                      message: 'vous ne pouvez pas delete ce commentaire'
+                    res.status(403).json({
+                      code: 403,
+                      message: 'you dont have permission'
                     })
                   }
                 }
               }
             }).catch(err => {
-              res.status(500).json({
-                code: 500,
-                message: err
-              })
+              if (err) {
+                res.status(400).json({
+                  code: 400,
+                  message: 'parent not found'
+                })
+              }
             })
           }).catch(err => {
-            res.status(500).json({
-              code: 500,
-              message: err
-            })
+            if (err) {
+              res.status(400).json({
+                code: 400,
+                message: 'parent not found'
+              })
+            }
           })
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(400).json({
+              code: 400,
+              message: 'bad request'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }

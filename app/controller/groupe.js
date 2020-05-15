@@ -45,25 +45,32 @@ class Groupe {
         this.UserModel.find({_id: {$in: administrators}}).then(user => {
           if (user.length === administrators.length) {
             groupModel.save().then(group => {
-              res.status(200).json(group || {})
-            }).catch(err => {
-              res.status(500).json({
-                code: 500,
-                message: err
+              res.status(201).json({
+                code: 201,
+                message: 'success create groupe'
               })
+            }).catch(err => {
+              if (err) {
+                res.status(403).json({
+                  code: 403,
+                  message: 'failed create new groupe'
+                })
+              }
             })
           } else {
-            res.status(404).json({
-              code: 404,
-              message: 'imposible de créer un évenement, Administrateur selectionner introuvable'
+            res.status(403).json({
+              code: 403,
+              message: 'user not found'
             })
           }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -95,10 +102,12 @@ class Groupe {
                   sondage: newEventInGroupe
                 })
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(403).json({
+                    code: 403,
+                    message: 'failed create new event'
+                  })
+                }
               })
             }
           } else {
@@ -121,24 +130,30 @@ class Groupe {
                   sondage: newEventInGroupe
                 })
               }).catch(err => {
-                res.status(500).json({
-                  code: 500,
-                  message: err
-                })
+                if (err) {
+                  res.status(403).json({
+                    code: 403,
+                    message: 'failed create new event'
+                  })
+                }
               })
             }
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 300,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'groupe not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -150,92 +165,109 @@ class Groupe {
     this.app.post('/groupe/addMembers/:idgroup', (req, res) => {
       try {   
         this.GroupeModel.findById(req.params.idgroup, 'members_ids moderators_ids administrators_id status').then(groupUser => {
-          console.log(groupUser)
-
           switch (groupUser.status) {
             case 'Public':
               if (groupUser.members_ids.some(o => req.body.members_ids.includes(o))) {
-                res.status(400).json({
-                  code: 203,
-                  message: 'un utilisateur déja présent dans cette evenement'
+                res.status(403).json({
+                  code: 403,
+                  message: 'user already exist in groupe'
                 })
                 return
               }
               groupUser.members_ids.push(...req.body.members_ids)
     
               groupUser.save().then(() => {
-                res.status(200).json(groupUser || {})
-              }).catch(err => {
-                res.status(500).json({
-                  code: 300,
-                  message: err
+                res.status(201).json({
+                  code: 201,
+                  message: 'success add members'
                 })
+              }).catch(err => {
+                if (err) {
+                  res.status(403).json({
+                    code: 403,
+                    message: 'add members failed'
+                  })
+                }
               })
               break
             case 'Privé':
               if (groupUser.moderators_ids.some(o => req.body.idsend.includes(o)) || groupUser.administrators_id.some(o => req.body.idsend.includes(o))) {
                 if (groupUser.members_ids.some(o => req.body.members_ids.includes(o))) {
-                  res.status(400).json({
-                    code: 203,
-                    message: 'un utilisateur déja présent dans cette evenement'
+                  res.status(403).json({
+                    code: 403,
+                    message: 'user already exist in groupe'
                   })
                   return
                 }
                 groupUser.members_ids.push(...req.body.members_ids)
       
                 groupUser.save().then(() => {
-                  res.status(200).json(groupUser || {})
-                }).catch(err => {
-                  res.status(500).json({
-                    code: 300,
-                    message: err
+                  res.status(201).json({
+                    code: 201,
+                    message: 'success add members'
                   })
+                }).catch(err => {
+                  if (err) {
+                    res.status(403).json({
+                      code: 403,
+                      message: 'add members failed'
+                    })
+                  }
                 })
               } else {
-                res.status(400).json({
-                  code: 203,
-                  message: 'vous ne pouvez pas ajouter des user'
+                res.status(403).json({
+                  code: 403,
+                  message: 'you dont have permssion'
                 })
               }
               break
             case 'secret':
               if (groupUser.administrators_id.some(o => req.body.idsend.includes(o))) {
                 if (groupUser.members_ids.some(o => req.body.members_ids.includes(o))) {
-                  res.status(400).json({
-                    code: 203,
-                    message: 'utilisateur déja présent dans cette evenement' 
+                  res.status(403).json({
+                    code: 403,
+                    message: 'user already exist in groupe' 
                   })
                   return
                 }
                 groupUser.members_ids.push(...req.body.members_ids)
       
                 groupUser.save().then(() => {
-                  res.status(200).json(groupUser || {})
-                }).catch(err => {
-                  res.status(500).json({
-                    code: 300,
-                    message: err
+                  res.status(201).json({
+                    code: 201,
+                    message: 'success add members'
                   })
+                }).catch(err => {
+                  if (err) {
+                    res.status(403).json({
+                      code: 403,
+                      message: 'update members failed'
+                    })
+                  }
                 })
               } else {
-                res.status(400).json({
-                  code: 203,
-                  message: 'vous ne pouvez pas ajouter des user'
+                res.status(403).json({
+                  code: 403,
+                  message: 'you dont have a permission'
                 })
               }
               break
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 400,
-            message: err
-          })
+          if (err) {
+            res.status(402).json({
+              code: 402,
+              message: 'groupe not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -247,43 +279,50 @@ class Groupe {
     this.app.post('/groupe/addModo/:idgroup', (req, res) => {
       try {        
         this.GroupeModel.findById(req.params.idgroup, 'moderators_ids administrators_id').then(GroupModo => {
-          console.log(GroupModo)
-
           if (GroupModo.administrators_id.some(o => req.body.idsend.includes(o))) {
             if (GroupModo.moderators_ids.some(o => req.body.moderators_ids.includes(o))) {
-              res.status(400).json({
-                code: 203,
-                message: 'utilisateur déja modérateur' 
+              res.status(403).json({
+                code: 403,
+                message: 'user already moderator' 
               })
               return
             }
             GroupModo.moderators_ids.push(...req.body.moderators_ids)
   
             GroupModo.save().then(() => {
-              res.status(200).json(GroupModo || {})
-            }).catch(err => {
-              res.status(500).json({
-                code: 300,
-                message: err
+              res.status(201).json({
+                code: 201,
+                message: 'success add moderator'
               })
+            }).catch(err => {
+              if (err) {
+                res.status(403).json({
+                  code: 403,
+                  message: 'update failed'
+                })
+              }
             })
           } else {
-            res.status(400).json({
-              code: 203,
-              message: 'vous ne pouvez pas ajouter de modérateurs'
+            res.status(403).json({
+              code: 403,
+              message: 'you dont have a permission'
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 400,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'groupe not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -295,43 +334,50 @@ class Groupe {
     this.app.post('/groupe/addAdmin/:idgroup', (req, res) => {
       try {        
         this.GroupeModel.findById(req.params.idgroup, 'administrators_id').then(groupAdmin => {
-          console.log(groupAdmin)
-
           if (groupAdmin.administrators_id[0] === req.body.idsend) {
             if (groupAdmin.administrators_id.some(o => req.body.administrators_id.includes(o))) {
-              res.status(400).json({
-                code: 203,
-                message: 'utilisateur déja admin' 
+              res.status(403).json({
+                code: 403,
+                message: 'user already admin' 
               })
               return
             }
             groupAdmin.administrators_id.push(...req.body.administrators_id)
   
             groupAdmin.save().then(() => {
-              res.status(200).json(groupAdmin || {})
-            }).catch(err => {
-              res.status(500).json({
-                code: 300,
-                message: err
+              res.status(201).json({
+                code: 201,
+                message: 'success admin add'
               })
+            }).catch(err => {
+              if (err) {
+                res.status(403).json({
+                  code: 403,
+                  message: 'update failed'
+                })
+              }
             })
           } else {
-            res.status(400).json({
-              code: 203,
-              message: 'vous ne pouvez pas ajouter d admin'
+            res.status(403).json({
+              code: 403,
+              message: 'you dont have a permission'
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 400,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'groupe not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -343,12 +389,11 @@ class Groupe {
     this.app.delete('/groupe/deleteMenbers/:idgroup', (req, res) => {
       try {        
         this.GroupeModel.findById(req.params.idgroup, 'members_ids moderators_ids administrators_id').then(deleteMembers => {
-          console.log(deleteMembers)
           if (deleteMembers.moderators_ids.some(o => req.body.idsend.includes(o)) || deleteMembers.administrators_id.some(o => req.body.idsend.includes(o))) {
             if (!deleteMembers.members_ids.some(o => req.body.members_ids.includes(o))) {
-              res.status(400).json({
-                code: 203,
-                message: ' utilisateur introuvable'
+              res.status(403).json({
+                code: 403,
+                message: 'user not found'
               })
               return
             }
@@ -356,30 +401,39 @@ class Groupe {
               return !req.body.members_ids.includes(item)
             })
             deleteMembers.save().then(() => {
-              res.status(200).json(deleteMembers || {})
-            }).catch(err => {
-              res.status(500).json({
-                code: 300,
-                message: err
+              res.status(201).json({
+                code: 201,
+                message: 'success delete'
               })
+            }).catch(err => {
+              if (err) {
+                res.status(403).json({
+                  code: 403,
+                  message: 'delete failed'
+                })
+              }
             })
           } else {
-            res.status(400).json({
-              code: 203,
-              message: 'vous ne pouvez supprimer cette user'
+            res.status(403).json({
+              code: 403,
+              message: 'you dont have permission'
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 400,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'groupe not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -391,12 +445,11 @@ class Groupe {
     this.app.delete('/groupe/deleteModerators/:idgroup', (req, res) => {
       try {        
         this.GroupeModel.findById(req.params.idgroup, 'moderators_ids administrators_id').then(DeleteModo => {
-          console.log(DeleteModo)
           if (DeleteModo.administrators_id.some(o => req.body.idsend.includes(o))) {
             if (!DeleteModo.moderators_ids.some(o => req.body.moderators_ids.includes(o))) {
-              res.status(400).json({
-                code: 203,
-                message: ' utilisateur introuvable'
+              res.status(403).json({
+                code: 403,
+                message: 'user not found'
               })
               return
             }
@@ -404,30 +457,39 @@ class Groupe {
               return !req.body.moderators_ids.includes(item)
             })
             DeleteModo.save().then(() => {
-              res.status(200).json(DeleteModo || {})
-            }).catch(err => {
-              res.status(500).json({
-                code: 300,
-                message: err
+              res.status(200).json({
+                code: 200,
+                message: 'success delete'
               })
+            }).catch(err => {
+              if (err) {
+                res.status(403).json({
+                  code: 403,
+                  message: 'delete failed'
+                })
+              }
             })
           } else {
-            res.status(400).json({
-              code: 203,
-              message: 'vous ne pouvez supprimer ce modérateur'
+            res.status(403).json({
+              code: 403,
+              message: 'you dont have a permission'
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 400,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'groupe not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -439,19 +501,18 @@ class Groupe {
     this.app.delete('/groupe/deleteAdmin/:idgroup', (req, res) => {
       try {        
         this.GroupeModel.findById(req.params.idgroup, 'administrators_id').then(deleteAdmin => {
-          console.log(deleteAdmin)
           if (deleteAdmin.administrators_id[0] === req.body.idsend) {
             if (deleteAdmin.administrators_id[0] === req.body.administrators_id) {
-              res.status(400).json({
-                code: 203,
-                message: 'vous ne pouvez pas supprimer un super admin'
+              res.status(403).json({
+                code: 403,
+                message: 'you dont have a permission'
               })
               return
             }
             if (!deleteAdmin.administrators_id.some(o => req.body.administrators_id.includes(o))) {
-              res.status(400).json({
-                code: 203,
-                message: ' utilisateur introuvable'
+              res.status(403).json({
+                code: 403,
+                message: 'you dont have a permission'
               })
               return
             }
@@ -459,30 +520,39 @@ class Groupe {
               return !req.body.administrators_id.includes(item)
             })
             deleteAdmin.save().then(() => {
-              res.status(200).json(deleteAdmin || {})
-            }).catch(err => {
-              res.status(500).json({
-                code: 300,
-                message: err
+              res.status(201).json({
+                code: 201,
+                message: 'success delete'
               })
+            }).catch(err => {
+              if (err) {
+                res.status(403).json({
+                  code: 403,
+                  message: 'delete failed'
+                })
+              }
             })
           } else {
-            res.status(400).json({
-              code: 203,
-              message: 'vous ne pouvez supprimer cette admin'
+            res.status(403).json({
+              code: 403,
+              message: 'you dont have a permission'
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 400,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'groupe not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -496,30 +566,39 @@ class Groupe {
         this.GroupeModel.findById(req.params.idgroup).then(group => {
           if (group.administrators_id[0] === req.params.iduser) {
             this.GroupeModel.findByIdAndRemove(req.params.idgroup).then(groupDelete => {
-              res.status(200).json(groupDelete || {})
-            }).catch(err => {
-              res.status(500).json({
-                code: 500,
-                message: err
+              res.status(201).json({
+                code: 201,
+                message: 'success delete'
               })
+            }).catch(err => {
+              if (err) {
+                res.status(403).json({
+                  code: 403,
+                  message: 'delete failed'
+                })
+              }
             })
           } else {
-            res.status(500).json({
-              code: 500,
+            res.status(403).json({
+              code: 403,
               message: 'you don t have permission'
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'groupe not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -532,24 +611,31 @@ class Groupe {
       try {
         this.GroupeModel.find({ status: 'Public' }).then(group => {
           if (!group.length) {
-            res.status(404).json({
-              code: 500,
-              message: 'aucun groupe trouvés :'
+            res.status(403).json({
+              code: 403,
+              message: 'groupe not found'
             })
           } else {
-            res.status(200).json(group || {})
+            res.status(200).json({
+              code: 200,
+              message: group
+            })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'groupe not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -562,24 +648,31 @@ class Groupe {
       try {
         this.EventModel.find({ groupe_ids: req.params.idgroupe }).then(eventGroup => {
           if (!eventGroup.length) {
-            res.status(404).json({
-              code: 500,
-              message: 'aucun groupe trouvés :'
+            res.status(403).json({
+              code: 403,
+              message: 'event not found'
             })
           } else {
-            res.status(200).json(eventGroup || {})
+            res.status(200).json({
+              code: 200,
+              message: eventGroup
+            })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'event not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -593,45 +686,54 @@ class Groupe {
         this.GroupeModel.findById(req.params.idgroup, 'administrators_id status').then(group => {
           const groupModel = this.GroupeModel(req.body.status)
           if (!req.body.status) {
-            res.status(404).json({
-              code: 404,
-              message: 'mauvais champ'
+            res.status(403).json({
+              code: 403,
+              message: 'invalide tex'
             })
             return
           }
           if (req.body.status === 'Public' || req.body.status === 'Privé' || req.body.status === 'Secret') {
             if (group.administrators_id[0] === req.body.idsend) {
               groupModel.save().then(() => {
-                res.status(200).json(groupModel || {})
-              }).catch(err => {
-                res.status(500).json({
-                  code: 300,
-                  message: err
+                res.status(201).json({
+                  code: 201,
+                  message: 'success update'
                 })
+              }).catch(err => {
+                if (err) {
+                  res.status(201).json({
+                    code: 201,
+                    message: 'update failed'
+                  })
+                }
               })
             } else {
-              res.status(404).json({
-                code: 404,
-                message: 'vous n avez pas la permission'
+              res.status(403).json({
+                code: 403,
+                message: 'you dont have a permission'
               })
             }
           } else {
-            res.status(404).json({
-              code: 404,
-              message: 'champ invalide'
+            res.status(403).json({
+              code: 403,
+              message: 'invalide text'
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 444,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'groupe not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 333,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -643,18 +745,25 @@ class Groupe {
     this.app.put('/groupe/update/:id', (req, res) => {
       try {
         this.GroupeModel.findOneAndUpdate(req.params.id, req.body).then(group => {
-          res.status(200).json(group || {})
-        }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
+          res.status(201).json({
+            code: 201,
+            message: 'success update'
           })
+        }).catch(err => {
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'update failed'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(403).json({
+            code: 403,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -667,9 +776,9 @@ class Groupe {
       try {
         this.GroupeModel.findById(req.params.id, 'administrators_id autorisation_members').then(group => {
           if (!req.body.permission.autorisation_members) {
-            res.status(404).json({
-              code: 404,
-              message: 'mauvais champ'
+            res.status(403).json({
+              code: 403,
+              message: 'permission denied'
             })
             return
           }
@@ -677,37 +786,45 @@ class Groupe {
             if (group.administrators_id[0] === req.body.idsend) {
               const groupModel = this.GroupeModel(req.body.permission)
               groupModel.save().then(() => {
-                res.status(200).json(groupModel || {})
-              }).catch(err => {
-                res.status(500).json({
-                  code: 300,
-                  message: err
+                res.status(201).json({
+                  code: 201,
+                  message: 'success update permission'
                 })
+              }).catch(err => {
+                if (err) {
+                  res.status(403).json({
+                    code: 403,
+                    message: 'update failed'
+                  })
+                }
               })
             } else {
-              res.status(404).json({
-                code: 404,
-                message: 'vous n avez pas la permission'
+              res.status(403).json({
+                code: 403,
+                message: 'you dont have a permission'
               })
             }
           } else {
-            res.status(404).json({
-              code: 404,
-              message: 'champ invalide'
+            res.status(403).json({
+              code: 403,
+              message: 'invalide text'
             })
           }
-          res.status(200).json(group || {})
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'groupe not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }

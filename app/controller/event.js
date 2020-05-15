@@ -39,25 +39,39 @@ class Event {
         this.UserModel.find({_id: {$in: administrators}}).then(user => {
           if (user.length === administrators.length) {
             eventModel.save().then(event => {
-              res.status(200).json(event || {})
-            }).catch(err => {
-              res.status(500).json({
-                code: 500,
-                message: err
+              res.status(201).json({
+                code: 201,
+                message: 'success event create'
               })
+            }).catch(err => {
+              if (err) {
+                res.status(403).json({
+                  code: 403,
+                  message: 'add user failed'
+                })
+              }
             })
           } else {
-            res.status(404).json({
-              code: 404,
-              message: 'imposible de créer un évenement, Administrateur selectionner introuvable'
+            res.status(403).json({
+              code: 403,
+              message: 'user not found'
+            })
+          }
+        }).catch(err => {
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'user not found'
             })
           }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -69,92 +83,109 @@ class Event {
     this.app.post('/event/addMembers/:idevent', (req, res) => {
       try {   
         this.EventModel.findById(req.params.idevent, 'members_ids moderators_ids administrators_ids status').then(eventUser => {
-          console.log(eventUser)
-
           switch (eventUser.status) {
             case 'public':
               if (eventUser.members_ids.some(o => req.body.members_ids.includes(o))) {
-                res.status(400).json({
-                  code: 203,
-                  message: 'un utilisateur déja présent dans cette evenement'
+                res.status(403).json({
+                  code: 403,
+                  message: 'user already exist in event' 
                 })
                 return
               }
               eventUser.members_ids.push(...req.body.members_ids)
     
               eventUser.save().then(() => {
-                res.status(200).json(eventUser || {})
-              }).catch(err => {
-                res.status(500).json({
-                  code: 300,
-                  message: err
+                res.status(201).json({
+                  code: 201,
+                  message: 'success add menbers'
                 })
+              }).catch(err => {
+                if (err) {
+                  res.status(403).json({
+                    code: 403,
+                    message: 'add menbers failed'
+                  })
+                }
               })
               break
             case 'Privé':
               if (eventUser.moderators_ids.some(o => req.body.idsend.includes(o)) || eventUser.administrators_ids.some(o => req.body.idsend.includes(o))) {
                 if (eventUser.members_ids.some(o => req.body.members_ids.includes(o))) {
-                  res.status(400).json({
-                    code: 203,
-                    message: 'un utilisateur déja présent dans cette evenement'
+                  res.status(403).json({
+                    code: 403,
+                    message: 'user already exist in event' 
                   })
                   return
                 }
                 eventUser.members_ids.push(...req.body.members_ids)
       
                 eventUser.save().then(() => {
-                  res.status(200).json(eventUser || {})
-                }).catch(err => {
-                  res.status(500).json({
-                    code: 300,
-                    message: err
+                  res.status(201).json({
+                    code: 201,
+                    message: 'success add menbers'
                   })
+                }).catch(err => {
+                  if (err) {
+                    res.status(403).json({
+                      code: 403,
+                      message: 'add menbers failed'
+                    })
+                  }
                 })
               } else {
-                res.status(400).json({
-                  code: 203,
-                  message: 'vous ne pouvez pas ajouter des user'
+                res.status(403).json({
+                  code: 403,
+                  message: 'you dont have a permission'
                 })
               }
               break
             case 'secret':
               if (eventUser.administrators_ids.some(o => req.body.idsend.includes(o))) {
                 if (eventUser.members_ids.some(o => req.body.members_ids.includes(o))) {
-                  res.status(400).json({
-                    code: 203,
-                    message: 'utilisateur déja présent dans cette evenement' 
+                  res.status(403).json({
+                    code: 403,
+                    message: 'user already exist in event' 
                   })
                   return
                 }
                 eventUser.members_ids.push(...req.body.members_ids)
       
                 eventUser.save().then(() => {
-                  res.status(200).json(eventUser || {})
-                }).catch(err => {
-                  res.status(500).json({
-                    code: 300,
-                    message: err
+                  res.status(201).json({
+                    code: 201,
+                    message: 'success add menbers'
                   })
+                }).catch(err => {
+                  if (err) {
+                    res.status(403).json({
+                      code: 403,
+                      message: 'add menbers failed'
+                    })
+                  }
                 })
               } else {
-                res.status(400).json({
-                  code: 203,
-                  message: 'vous ne pouvez pas ajouter des user'
+                res.status(403).json({
+                  code: 403,
+                  message: 'you dont have a permission'
                 })
               }
               break
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 400,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'event not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -166,43 +197,50 @@ class Event {
     this.app.post('/event/addModo/:idevent', (req, res) => {
       try {        
         this.EventModel.findById(req.params.idevent, 'moderators_ids administrators_ids').then(eventModo => {
-          console.log(eventModo)
-
           if (eventModo.administrators_ids.some(o => req.body.idsend.includes(o))) {
             if (eventModo.moderators_ids.some(o => req.body.moderators_ids.includes(o))) {
-              res.status(400).json({
-                code: 203,
-                message: 'utilisateur déja modérateur' 
+              res.status(403).json({
+                code: 403,
+                message: 'user already exist in event' 
               })
               return
             }
             eventModo.moderators_ids.push(...req.body.moderators_ids)
   
             eventModo.save().then(() => {
-              res.status(200).json(eventModo || {})
-            }).catch(err => {
-              res.status(500).json({
-                code: 300,
-                message: err
+              res.status(201).json({
+                code: 201,
+                message: 'success add mederator'
               })
+            }).catch(err => {
+              if (err) {
+                res.status(403).json({
+                  code: 403,
+                  message: 'add moderator failed'
+                })
+              }
             })
           } else {
-            res.status(400).json({
-              code: 203,
-              message: 'vous ne pouvez pas ajouter de modérateurs'
+            res.status(403).json({
+              code: 403,
+              message: 'you dont have a permission'
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 400,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'event not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -214,43 +252,50 @@ class Event {
     this.app.post('/event/addAdmin/:idevent', (req, res) => {
       try {        
         this.EventModel.findById(req.params.idevent, 'administrators_ids').then(eventAdmin => {
-          console.log(eventAdmin)
-
           if (eventAdmin.administrators_ids[0] === req.body.idsend) {
             if (eventAdmin.administrators_ids.some(o => req.body.administrators_ids.includes(o))) {
               res.status(400).json({
                 code: 203,
-                message: 'utilisateur déja admin' 
+                message: 'user already exist in event' 
               })
               return
             }
             eventAdmin.administrators_ids.push(...req.body.administrators_ids)
   
             eventAdmin.save().then(() => {
-              res.status(200).json(eventAdmin || {})
-            }).catch(err => {
-              res.status(500).json({
-                code: 300,
-                message: err
+              res.status(201).json({
+                code: 201,
+                message: 'success add admin'
               })
+            }).catch(err => {
+              if (err) {
+                res.status(403).json({
+                  code: 403,
+                  message: 'add admin failed'
+                })
+              }
             })
           } else {
-            res.status(400).json({
-              code: 203,
-              message: 'vous ne pouvez pas ajouter d admin'
+            res.status(403).json({
+              code: 403,
+              message: 'you dont have a permission'
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 400,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'event not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -262,12 +307,11 @@ class Event {
     this.app.delete('/event/deleteMenbers/:idevent', (req, res) => {
       try {        
         this.EventModel.findById(req.params.idevent, 'members_ids moderators_ids administrators_ids').then(eventUser => {
-          console.log(eventUser)
           if (eventUser.moderators_ids.some(o => req.body.idsend.includes(o)) || eventUser.administrators_ids.some(o => req.body.idsend.includes(o))) {
             if (!eventUser.members_ids.some(o => req.body.members_ids.includes(o))) {
-              res.status(400).json({
-                code: 203,
-                message: ' utilisateur introuvable'
+              res.status(403).json({
+                code: 403,
+                message: 'user not found'
               })
               return
             }
@@ -275,30 +319,39 @@ class Event {
               return !req.body.members_ids.includes(item)
             })
             eventUser.save().then(() => {
-              res.status(200).json(eventUser || {})
-            }).catch(err => {
-              res.status(500).json({
-                code: 300,
-                message: err
+              res.status(201).json({
+                code: 201,
+                message: 'success delete'
               })
+            }).catch(err => {
+              if (err) {
+                res.status(403).json({
+                  code: 403,
+                  message: 'delete failed'
+                })
+              }
             })
           } else {
-            res.status(400).json({
-              code: 203,
-              message: 'vous ne pouvez supprimer cette user'
+            res.status(403).json({
+              code: 403,
+              message: 'you dont have a permission'
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 400,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'event not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -310,12 +363,11 @@ class Event {
     this.app.delete('/event/deleteModerators/:idevent', (req, res) => {
       try {        
         this.EventModel.findById(req.params.idevent, 'moderators_ids administrators_ids').then(eventModo => {
-          console.log(eventModo)
           if (eventModo.administrators_ids.some(o => req.body.idsend.includes(o))) {
             if (!eventModo.moderators_ids.some(o => req.body.moderators_ids.includes(o))) {
-              res.status(400).json({
-                code: 203,
-                message: ' utilisateur introuvable'
+              res.status(403).json({
+                code: 403,
+                message: 'user not found'
               })
               return
             }
@@ -323,30 +375,39 @@ class Event {
               return !req.body.moderators_ids.includes(item)
             })
             eventModo.save().then(() => {
-              res.status(200).json(eventModo || {})
-            }).catch(err => {
-              res.status(500).json({
-                code: 300,
-                message: err
+              res.status(201).json({
+                code: 201,
+                message: 'success delete'
               })
+            }).catch(err => {
+              if (err) {
+                res.status(403).json({
+                  code: 403,
+                  message: 'delete failed'
+                })
+              }
             })
           } else {
-            res.status(400).json({
-              code: 203,
-              message: 'vous ne pouvez supprimer ce modérateur'
+            res.status(403).json({
+              code: 403,
+              message: 'you dont have a permission'
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 400,
-            message: err
-          })
+          if (err) {
+            res.status(400).json({
+              code: 400,
+              message: 'event not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -358,19 +419,18 @@ class Event {
     this.app.delete('/event/deleteAdmin/:idevent', (req, res) => {
       try {        
         this.EventModel.findById(req.params.idevent, 'administrators_ids').then(eventAdmin => {
-          console.log(eventAdmin)
           if (eventAdmin.administrators_ids[0] === req.body.idsend) {
             if (eventAdmin.administrators_ids[0] === req.body.administrators_ids) {
-              res.status(400).json({
-                code: 203,
-                message: 'vous ne pouvez pas supprimer un super admin'
+              res.status(403).json({
+                code: 403,
+                message: 'you dont have a permission'
               })
               return
             }
             if (!eventAdmin.administrators_ids.some(o => req.body.administrators_ids.includes(o))) {
-              res.status(400).json({
-                code: 203,
-                message: ' utilisateur introuvable'
+              res.status(403).json({
+                code: 403,
+                message: 'user not found'
               })
               return
             }
@@ -378,30 +438,39 @@ class Event {
               return !req.body.administrators_ids.includes(item)
             })
             eventAdmin.save().then(() => {
-              res.status(200).json(eventAdmin || {})
-            }).catch(err => {
-              res.status(500).json({
-                code: 300,
-                message: err
+              res.status(201).json({
+                code: 201,
+                message: 'sucess delete'
               })
+            }).catch(err => {
+              if (err) {
+                res.status(403).json({
+                  code: 403,
+                  message: 'delete failed'
+                })
+              }
             })
           } else {
-            res.status(400).json({
-              code: 203,
-              message: 'vous ne pouvez supprimer cette admin'
+            res.status(403).json({
+              code: 403,
+              message: 'you dont have a permission'
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 400,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'event not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -415,30 +484,39 @@ class Event {
         this.EventModel.findById(req.params.idevent).then(event => {
           if (event.administrators_ids[0] === req.params.iduser) {
             this.EventModel.findByIdAndRemove(req.params.idevent).then(eventDelete => {
-              res.status(200).json(eventDelete || {})
-            }).catch(err => {
-              res.status(500).json({
-                code: 500,
-                message: err
+              res.status(201).json({
+                code: 201,
+                message: 'success delete'
               })
+            }).catch(err => {
+              if (err) {
+                res.status(403).json({
+                  code: 403,
+                  message: 'delete failed'
+                })
+              }
             })
           } else {
-            res.status(500).json({
-              code: 500,
-              message: 'you don t have permission'
+            res.status(403).json({
+              code: 403,
+              message: 'you dont have a permission'
             })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(400).json({
+              code: 400,
+              message: 'event not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -451,24 +529,31 @@ class Event {
       try {
         this.EventModel.find({ status: 'public' }).then(event => {
           if (!event.length) {
-            res.status(404).json({
-              code: 500,
-              message: 'aucun event trouvés :'
+            res.status(403).json({
+              code: 403,
+              message: 'event not found :'
             })
           } else {
-            res.status(200).json(event || {})
+            res.status(200).json({
+              code: 200,
+              message: event
+            })
           }
         }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
-          })
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'event not found'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
@@ -480,18 +565,25 @@ class Event {
     this.app.put('/event/update/:id', (req, res) => {
       try {
         this.EventModel.findOneAndUpdate(req.params.id, req.body).then(user => {
-          res.status(200).json(user || {})
-        }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
+          res.status(201).json({
+            code: 201,
+            message: 'success update'
           })
+        }).catch(err => {
+          if (err) {
+            res.status(403).json({
+              code: 403,
+              message: 'update failed'
+            })
+          }
         })
       } catch (err) {
-        res.status(500).json({
-          code: 500,
-          message: err
-        })
+        if (err) {
+          res.status(400).json({
+            code: 400,
+            message: 'bad request'
+          })
+        }
       }
     })
   }
