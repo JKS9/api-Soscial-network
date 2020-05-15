@@ -11,7 +11,7 @@ const Schema = new mongoose.Schema({
     type: String
   },
   prix_Unitaire: {
-    type: Number
+    type: String
   },
   prix_total: {
     type: String
@@ -39,7 +39,7 @@ const Schema = new mongoose.Schema({
     defaut: new Date()
   }
 }, {
-  collection: 'billetterie',
+  collection: 'billetterie_buy',
   minimize: false,
   versionKey: false
 }).set('toJSON', {

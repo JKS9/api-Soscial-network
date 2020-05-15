@@ -1,8 +1,8 @@
 # API Soscial Network
-here is a social network api, my goal was to redo the facebook api with a pdf of the functional needs of the new API
+here is a social network api, my goal was to create the facebook api with a pdf of the functional needs of the new API
 
 ### Requirements
-* node 10
+* node v12.13.0
 * npm
 * git
 * mongodb (please configure config.js for link mongodb with your localhost)
@@ -19,7 +19,7 @@ creation of a user CRUDS, which allows us to manipulate our user data
 * create
 * reade
 * update
-* update
+* Delete
 * search
 
 ### [ POST ] Create user
