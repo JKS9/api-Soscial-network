@@ -142,6 +142,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	message: 'Delete user'
 }
 ```
+
 ### [ POST ] Update user
 * HTTP request : POST → /user/update/:id
 
@@ -906,5 +907,311 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	autorisation_members: String,
 	conversation_id: String
 	status: String
+}
+```
+# Conversation
+### [ POST ] Create Conversation
+* HTTP request : POST → /conversation/create/
+
+#### Parameters :
+```javascript
+{
+	'status': String, // Required
+	'id': String, // Required
+	'idsend': String, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_groupe: String,
+	id_event: String,
+	date_start: Date
+}
+```
+
+### [ POST ] Add Message
+* HTTP request : POST → /conversation/messagerie/
+
+#### Parameters :
+```javascript
+{
+	'status': String, // Required
+	'id': String, // Required
+	'idsend': String, // Required
+	'message': String, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_conversation: String,
+	id_user: String,
+	message: String,
+	date_send: Date
+}
+```
+
+### [ POST ] Add Commentaire
+* HTTP request : POST → /conversation/commentaire/:idmessage
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'commentaire': String, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_message: String,
+	id_sende: String,
+	commentaire: String,
+	date_send: Date
+}
+```
+
+### [ GET ] Show Conversation
+* HTTP request : GET → /conversation/:id/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_conversation: String,
+	id_user: String,
+	message: String,
+	date_send: Date
+},
+{
+	_id: Object_ID,
+	id_conversation: String,
+	id_user: String,
+	message: String,
+	date_send: Date
+},
+{
+	_id: Object_ID,
+	id_conversation: String,
+	id_user: String,
+	message: String,
+	date_send: Date
+}
+```
+
+### [ GET ] Show Commentaire
+* HTTP request : GET → /conversation/commentaire/:idmessage/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_conversation: String,
+	id_user: String,
+	message: String,
+	date_send: Date,
+	commentaire: {
+		{
+		_id: Object_ID,
+		id_message: String,
+		id_sende: String,
+		commentaire: String,
+		date_send: Date
+		},
+		{
+		_id: Object_ID,
+		id_message: String,
+		id_sende: String,
+		commentaire: String,
+		date_send: Date
+		}
+	}
+},
+```
+
+### [ DELETE ] Delete Message
+* HTTP request : DELETE → /conversation/message/:idmessage/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete Message'
+}
+```
+
+### [ DELETE ] Delete Commentaire
+* HTTP request : DELETE → /conversation/commentaire/:idcommentaire/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete Commentaire'
+}
+```
+
+# Album
+### [ POST ] Add Picture In Album
+* HTTP request : POST → /album/addpicture/:idevent
+
+#### Parameters :
+```javascript
+{
+	'id_user': String, // Required
+	'name_file': String, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_album: String,
+	id_user: String,
+	name_file: String
+	date_start: Date
+}
+```
+
+### [ GET ] Show Album
+* HTTP request : GET → /album/:idevent/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_album: String,
+	id_user: String,
+	name_file: String
+	date_start: Date
+},
+{
+	_id: Object_ID,
+	id_album: String,
+	id_user: String,
+	name_file: String
+	date_start: Date
+}
+```
+
+### [ GET ] Show One Picture
+* HTTP request : GET → /album/photo/:idphoto/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_album: String,
+	id_user: String,
+	name_file: String
+	date_start: Date
+}
+```
+
+### [ POST ] Add Commentaire In Picture
+* HTTP request : POST → /album/commentaire/:idphoto/
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'commentaire': String, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_message: String,
+	id_sende: String,
+	commentaire: String
+	date_send: Date
+}
+```
+
+### [ DELETE ] Delete Commentaire
+* HTTP request : DELETE → /album/commentaire/:idcommentaire/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete Commentaire'
+}
+```
+
+### [ DELETE ] Delete Commentaire
+* HTTP request : DELETE → /album/photo/:idphoto/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete Picture'
 }
 ```
