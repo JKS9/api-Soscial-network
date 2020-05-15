@@ -125,6 +125,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	image_profil: String
 }
 ```
+
 ### [ DELETE ] Delete user
 * HTTP request : DELETE →/user/delete/:id
 
@@ -1392,7 +1393,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 ```
 
 ### [ PUT ] Update Sondage
-* HTTP request : GET → /sondage/update/:idsondage/:idsend
+* HTTP request : PUT → /sondage/update/:idsondage/:idsend
 
 #### Parameters :
 ```javascript
@@ -1413,7 +1414,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 ```
 
 ### [ PUT ] Update Sondage Reponse
-* HTTP request : GET → /sondage/update/reponse/:idreponse/:idsend
+* HTTP request : PUT → /sondage/update/reponse/:idreponse/:idsend
 
 #### Parameters :
 ```javascript
@@ -1430,5 +1431,267 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	question: String,
 	id_user_creator: String,
 	date_start: Date
+}
+```
+
+# Ticket
+### [ POST ] Create Ticket
+* HTTP request : POST → /billet/create/:idevent
+
+#### Parameters :
+```javascript
+{
+	'id_user_creator': String, // Required
+	'name': String, // Required
+	'price': String, // Required 
+	'nb_quantity': String, // Required
+	'date_create': String, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_user_creator: String,
+	name: String,
+	price: String,
+	nb_quantity: Number
+	date_create: Date
+}
+```
+
+### [ POST ] Create Ticket buy
+* HTTP request : POST → /billet/buy/:idbillet
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'quantity': String, // Required
+	'city': String, // Required 
+	'city_code': String, // Required
+	'street_number': String, // Required
+	'street_type': String, // Required
+	'street_name': String, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_event: String,
+	quantity: String,
+	prix_Unitaire: String,
+	prix_total: Number,
+	id_user_buy: String,
+	city: String,
+	street_number: String,
+	street_name: String,
+	street_type: String,
+}
+```
+
+### [ DELETE ] Delete Ticket
+* HTTP request : DELETE → /billet/delete/:idbillet/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete Ticket'
+}
+```
+
+### [ PUT ] Update Ticket
+* HTTP request : PUT → /billet/update/:idbillet/:idsend
+
+#### Parameters :
+```javascript
+{
+	'name': String, // Required
+	'price': String, // Required
+	'nb_quantity': String, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_user_creator: String,
+	name: String,
+	price: String,
+	nb_quantity: Number
+	date_create: Date
+}
+```
+
+### [ GET ] Show Ticket
+* HTTP request : GET → /billet/:idevent/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_user_creator: String,
+	name: String,
+	price: String,
+	nb_quantity: Number
+	date_create: Date
+},
+{
+	_id: Object_ID,
+	id_user_creator: String,
+	name: String,
+	price: String,
+	nb_quantity: Number
+	date_create: Date
+}
+```
+
+### [ GET ] Show Ticket Buy
+* HTTP request : GET → /billet/buy/:idevent/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_event: String,
+	quantity: String,
+	prix_Unitaire: String,
+	prix_total: Number,
+	id_user_buy: String,
+	city: String,
+	street_number: String,
+	street_name: String,
+	street_type: String,
+},
+{
+	_id: Object_ID,
+	id_event: String,
+	quantity: String,
+	prix_Unitaire: String,
+	prix_total: Number,
+	id_user_buy: String,
+	city: String,
+	street_number: String,
+	street_name: String,
+	street_type: String,
+}
+```
+
+# Shopping
+### [ POST ] Create Shopping
+* HTTP request : POST → /shopping/create/:idevent
+
+#### Parameters :
+```javascript
+{
+	'name': String, // Required
+	'quantity': String, // Required 
+	'id_user': String, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_event: String,
+	name: String,
+	quantity: String,
+	id_user: Number
+}
+```
+
+
+### [ DELETE ] Delete Shopping Item
+* HTTP request : DELETE → /shopping/delete/:item/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete Shopping Item'
+}
+```
+
+### [ PUT ] Update Shopping Item
+* HTTP request : GET → /shopping/update/:item/:idsend
+
+#### Parameters :
+```javascript
+{
+	'name': String, // Optional
+	'quantity': Number, // Optional
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_event: String,
+	name: String,
+	quantity: String,
+	id_user: Number
+}
+```
+
+### [ GET ] Show Shopping Item
+* HTTP request : GET → /shopping/:idevent
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_event: String,
+	name: String,
+	quantity: String,
+	id_user: Number
+},
+{
+	_id: Object_ID,
+	id_event: String,
+	name: String,
+	quantity: String,
+	id_user: Number
 }
 ```
