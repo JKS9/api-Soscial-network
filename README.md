@@ -200,8 +200,8 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	'members_ids': Array, // Optional
 	'groupe_ids': String, // Optional
 	'conversation_id': String, // Optional
-	'album_id': String // Optional
-	'shopping': Boolean // Optional
+	'album_id': String, // Optional
+	'shopping': Boolean, // Optional
 	'status': String // Required
 }
 ```
@@ -522,7 +522,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	moderators_ids: Array,
 	members_ids: Array,
 	autorisation_members: String,
-	conversation_id: String
+	conversation_id: String,
 	status: String
 }
 ```
@@ -594,7 +594,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	moderators_ids: Array,
 	members_ids: Array,
 	autorisation_members: String,
-	conversation_id: String
+	conversation_id: String,
 	status: String
 }
 ```
@@ -623,7 +623,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	moderators_ids: Array,
 	members_ids: Array,
 	autorisation_members: String,
-	conversation_id: String
+	conversation_id: String,
 	status: String
 }
 ```
@@ -652,7 +652,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	moderators_ids: Array,
 	members_ids: Array,
 	autorisation_members: String,
-	conversation_id: String
+	conversation_id: String,
 	status: String
 }
 ```
@@ -754,7 +754,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	moderators_ids: Array,
 	members_ids: Array,
 	autorisation_members: String,
-	conversation_id: String
+	conversation_id: String,
 	status: String
 },
 {
@@ -768,7 +768,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	moderators_ids: Array,
 	members_ids: Array,
 	autorisation_members: String,
-	conversation_id: String
+	conversation_id: String,
 	status: String
 }
 ```
@@ -845,7 +845,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	moderators_ids: Array,
 	members_ids: Array,
 	autorisation_members: String,
-	conversation_id: String
+	conversation_id: String,
 	status: String
 }
 ```
@@ -860,7 +860,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	'name': String, // Optional
 	'description': String, // Optional
 	'icone_group': String, // Optional
-	'image_fond': String, // Optional
+	'image_fond': String // Optional
 }
 ```
 
@@ -877,7 +877,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	moderators_ids: Array,
 	members_ids: Array,
 	autorisation_members: String,
-	conversation_id: String
+	conversation_id: String,
 	status: String
 }
 ```
@@ -1445,7 +1445,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	'name': String, // Required
 	'price': String, // Required 
 	'nb_quantity': String, // Required
-	'date_create': String, // Required
+	'date_create': String // Required
 }
 ```
 
@@ -1456,7 +1456,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	id_user_creator: String,
 	name: String,
 	price: String,
-	nb_quantity: Number
+	nb_quantity: Number,
 	date_create: Date
 }
 ```
@@ -1530,7 +1530,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	id_user_creator: String,
 	name: String,
 	price: String,
-	nb_quantity: Number
+	nb_quantity: Number,
 	date_create: Date
 }
 ```
@@ -1552,7 +1552,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	id_user_creator: String,
 	name: String,
 	price: String,
-	nb_quantity: Number
+	nb_quantity: Number,
 	date_create: Date
 },
 {
