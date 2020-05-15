@@ -108,7 +108,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	street_name: String,
 	phone: String,
 	image_profil: String
-}
+},
 {
 	_id: Object_ID,
 	first_name: String,
@@ -423,7 +423,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	album_id: String,
 	shopping: Boolean,
 	status: String
-}
+},
 {
 	_id: Object_ID,
 	name: String,
@@ -483,6 +483,428 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	conversation_id: String,
 	album_id: String,
 	shopping: Boolean,
+	status: String
+}
+```
+
+# Groupe
+### [ POST ] Create Groupe
+* HTTP request : POST → /groupe/create/
+
+#### Parameters :
+```javascript
+{
+	'name': String, // Required
+	'description': String, // Required
+	'icone_group': String, // Optional
+	'image_fond': String, // Optional
+	'administrators_ids': Array, // Required
+	'moderators_ids': Array, // Optional
+	'members_ids': Array, // Optional
+	'autorisation_members': String, // Required
+	'conversation_id': String, // Optional
+	'status': String // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	icone_group: String,
+	image_fond: String,
+	date_start: Date,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	autorisation_members: String,
+	conversation_id: String
+	status: String
+}
+```
+
+### [ POST ] Create Event In Groupe
+* HTTP request : POST → /groupe/create/event/:idgroupe
+
+#### Parameters :
+```javascript
+{
+	'name': String, // Required
+	'description': String, // Required
+	'date_end': String, // Required
+	'location': String, // Required
+	'image': String, // Optional
+	'administrators_ids': Array, // Required
+	'moderators_ids': Array, // Optional
+	'members_ids': Array, // Optional
+	'groupe_ids': String, // Required
+	'conversation_id': String, // Optional
+	'album_id': String // Optional
+	'shopping': Boolean // Optional
+	'status': String // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	date_start: Date,
+	date_end: Date,
+	location: String, 
+	image: Number,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	groupe_ids: String,
+	conversation_id: String,
+	album_id: String,
+	shopping: Boolean,
+	status: String
+}
+```
+
+### [ POST ] Add Menbers Groupe
+* HTTP request : POST → /groupe/addMembers/:idgroup
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'members_ids': Array, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	icone_group: String,
+	image_fond: String,
+	date_start: Date,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	autorisation_members: String,
+	conversation_id: String
+	status: String
+}
+```
+
+### [ POST ] Add Moderators Groupe
+* HTTP request : POST → /groupe/addModo/:idgroup
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'moderators_ids': Array, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	icone_group: String,
+	image_fond: String,
+	date_start: Date,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	autorisation_members: String,
+	conversation_id: String
+	status: String
+}
+```
+
+### [ POST ] Add Admin Groupe
+* HTTP request : POST → /groupe/addAdmin/:idgroup
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'administrators_id': Array, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	icone_group: String,
+	image_fond: String,
+	date_start: Date,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	autorisation_members: String,
+	conversation_id: String
+	status: String
+}
+```
+
+### [ DELETE ] delete Menbers Groupe
+* HTTP request : DELETE → /groupe/deleteMenbers/:idgroup
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'administrators_id': Array, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete Menbers'
+}
+```
+
+### [ DELETE ] delete Moderators Groupe
+* HTTP request : DELETE → /groupe/deleteModerators/:idgroup
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'moderators_ids': Array, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete Moderators'
+}
+```
+### [ DELETE ] delete Admin Groupe
+* HTTP request : DELETE → /groupe/deleteAdmin/:idgroup
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'administrators_id': Array, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete Admin'
+}
+```
+
+### [ DELETE ] delete Groupe
+* HTTP request : DELETE → /groupe/delete/:idgroup/user/:iduse
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete Groupe'
+}
+```
+
+### [ GET ] Show Groupe public
+* HTTP request : GET → /groupe/show/
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	icone_group: String,
+	image_fond: String,
+	date_start: Date,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	autorisation_members: String,
+	conversation_id: String
+	status: String
+},
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	icone_group: String,
+	image_fond: String,
+	date_start: Date,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	autorisation_members: String,
+	conversation_id: String
+	status: String
+}
+```
+
+### [ GET ] Show Event in Groupe
+* HTTP request : GET → /groupe/show/:idgroupe/event
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	date_start: Date,
+	date_end: Date,
+	location: String, 
+	image: Number,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	groupe_ids: String,
+	conversation_id: String,
+	album_id: String,
+	shopping: Boolean,
+	status: String
+},
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	date_start: Date,
+	date_end: Date,
+	location: String, 
+	image: Number,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	groupe_ids: String,
+	conversation_id: String,
+	album_id: String,
+	shopping: Boolean,
+	status: String
+}
+```
+
+### [ PUT ] Update Status Groupe
+* HTTP request : PUT → /groupe/updateStatus/:idgroup
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'status': String // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	icone_group: String,
+	image_fond: String,
+	date_start: Date,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	autorisation_members: String,
+	conversation_id: String
+	status: String
+}
+```
+
+### [ PUT ] Update Groupe
+* HTTP request : PUT → /groupe/update/:id
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'name': String, // Optional
+	'description': String, // Optional
+	'icone_group': String, // Optional
+	'image_fond': String, // Optional
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	icone_group: String,
+	image_fond: String,
+	date_start: Date,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	autorisation_members: String,
+	conversation_id: String
+	status: String
+}
+```
+
+### [ PUT ] Update Permission Groupe
+* HTTP request : PUT → /groupe/updatePermission/:id
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'autorisation_members': String, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	icone_group: String,
+	image_fond: String,
+	date_start: Date,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	autorisation_members: String,
+	conversation_id: String
 	status: String
 }
 ```
