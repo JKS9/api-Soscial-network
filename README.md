@@ -15,7 +15,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 
 # Users
 ### [ POST ] Create user
-* HTTP request : POST → user/create
+* HTTP request : POST → /user/create
 
 #### Parameters :
 ```javascript
@@ -139,7 +139,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 ```javascript
 {
 	code: 201,
-	message: Delete user
+	message: 'Delete user'
 }
 ```
 ### [ POST ] Update user
@@ -148,17 +148,17 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 #### Parameters :
 ```javascript
 {
-	'first_name': String, // optinel
-	'last_name': String, // optinel
-	'email': String, // optinel
-	'password': String, // optinel
-	'age': Number, // optinel
-	'city': String, // optinel
-	'city_code': String, // optinel
-	'street_number': String, // optinel
-	'street_type': String, // optinel
-	'street_name': String, // optinel
-	'phone': String // optinel
+	'first_name': String, // Optional
+	'last_name': String, // Optional
+	'email': String, // Optional
+	'password': String, // Optional
+	'age': Number, // Optional
+	'city': String, // Optional
+	'city_code': String, // Optional
+	'street_number': String, // Optional
+	'street_type': String, // Optional
+	'street_name': String, // Optional
+	'phone': String // Optional
 }
 ```
 
@@ -178,5 +178,49 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	street_name: String,
 	phone: String,
 	image_profil: String
+}
+```
+
+# Event
+### [ POST ] Create Event
+* HTTP request : POST → /event/create/
+
+#### Parameters :
+```javascript
+{
+	'name': String, // Required
+	'description': String, // Required
+	'date_end': String, // Required
+	'location': String, // Required
+	'image': String, // Optional
+	'administrators_ids': Array, // Required
+	'moderators_ids': Array, // Optional
+	'members_ids': Array, // Optional
+	'groupe_ids': String, // Optional
+	'conversation_id': String, // Optional
+	'album_id': String // Optional
+	'shopping': Boolean // Optional
+	'status': String // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	date_start: Date,
+	date_end: Date,
+	location: String, 
+	image: Number,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	groupe_ids: String,
+	conversation_id: String,
+	album_id: String,
+	shopping: Boolean,
+	status: String
 }
 ```
