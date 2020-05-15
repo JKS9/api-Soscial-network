@@ -1104,7 +1104,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	_id: Object_ID,
 	id_album: String,
 	id_user: String,
-	name_file: String
+	name_file: String,
 	date_start: Date
 }
 ```
@@ -1125,14 +1125,14 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	_id: Object_ID,
 	id_album: String,
 	id_user: String,
-	name_file: String
+	name_file: String,
 	date_start: Date
 },
 {
 	_id: Object_ID,
 	id_album: String,
 	id_user: String,
-	name_file: String
+	name_file: String,
 	date_start: Date
 }
 ```
@@ -1153,7 +1153,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	_id: Object_ID,
 	id_album: String,
 	id_user: String,
-	name_file: String
+	name_file: String,
 	date_start: Date
 }
 ```
@@ -1175,7 +1175,7 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	_id: Object_ID,
 	id_message: String,
 	id_sende: String,
-	commentaire: String
+	commentaire: String,
 	date_send: Date
 }
 ```
@@ -1213,5 +1213,222 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 {
 	code: 201,
 	message: 'Delete Picture'
+}
+```
+
+# Sondage
+### [ POST ] Create Sondage
+* HTTP request : POST → /sondage/create/:idevent
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'question': String, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_event: String,
+	question: String,
+	id_user_creator: String,
+	date_start: Date
+}
+```
+
+### [ POST ] Create Sondage Reponse
+* HTTP request : POST → /sondage/create/reponse/:idsondage
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'reponse': String, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_sondage: String,
+	reponse: String,
+	date_start: Date
+}
+```
+
+### [ POST ] Add Reponse User In Sondage
+* HTTP request : POST → /sondage/reponse/user/:idsondage
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'id_reponse': String, // Required
+	'id_user': String // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_sondage: String,
+	reponse: String,
+	date_start: Date
+}
+```
+### [ DELETE ] Delete Sondage
+* HTTP request : DELETE → /sondage/delete/:idsondage/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete Sondage'
+}
+```
+
+### [ DELETE ] Delete Sondage Reponse
+* HTTP request : DELETE → /sondage/delete/reponse/:idreponse/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete Sondage'
+}
+```
+
+### [ DELETE ] Delete Sondage Reponse User
+* HTTP request : DELETE → /sondage/delete/reponseUser/:idreponseUser/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete Reponse User In Sondage'
+}
+```
+
+## [ GET ] Show Sondage
+* HTTP request : GET → /sondage/:idevent/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_event: String,
+	question: String,
+	id_user_creator: String,
+	date_start: Date
+},
+{
+	_id: Object_ID,
+	id_event: String,
+	question: String,
+	id_user_creator: String,
+	date_start: Date
+},
+{
+	_id: Object_ID,
+	id_event: String,
+	question: String,
+	id_user_creator: String,
+	date_start: Date
+}
+```
+
+## [ GET ] Show One Sondage
+* HTTP request : GET → /sondage/one/:idsondage/:idsend
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_event: String,
+	question: String,
+	id_user_creator: String,
+	date_start: Date
+}
+```
+
+### [ PUT ] Update Sondage
+* HTTP request : GET → /sondage/update/:idsondage/:idsend
+
+#### Parameters :
+```javascript
+{
+	'question': String, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_event: String,
+	question: String,
+	id_user_creator: String,
+	date_start: Date
+}
+```
+
+### [ PUT ] Update Sondage Reponse
+* HTTP request : GET → /sondage/update/reponse/:idreponse/:idsend
+
+#### Parameters :
+```javascript
+{
+	'reponse': String, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	id_event: String,
+	question: String,
+	id_user_creator: String,
+	date_start: Date
 }
 ```
