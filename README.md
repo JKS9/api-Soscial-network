@@ -224,3 +224,265 @@ here is a social network api, my goal was to create the facebook api with a pdf 
 	status: String
 }
 ```
+
+### [ POST ] Add Menbers Event
+* HTTP request : POST → /event/addMembers/:idevent
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'members_ids': Array, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	date_start: Date,
+	date_end: Date,
+	location: String, 
+	image: Number,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	groupe_ids: String,
+	conversation_id: String,
+	album_id: String,
+	shopping: Boolean,
+	status: String
+}
+```
+
+### [ POST ] Add Moderators Event
+* HTTP request : POST → /event/addModo/:idevent
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'moderators_ids': Array, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	date_start: Date,
+	date_end: Date,
+	location: String, 
+	image: Number,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	groupe_ids: String,
+	conversation_id: String,
+	album_id: String,
+	shopping: Boolean,
+	status: String
+}
+```
+
+### [ POST ] Add Administrateur Event
+* HTTP request : POST → /event/addAdmin/:idevent
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'administrators_ids': Array, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	date_start: Date,
+	date_end: Date,
+	location: String, 
+	image: Number,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	groupe_ids: String,
+	conversation_id: String,
+	album_id: String,
+	shopping: Boolean,
+	status: String
+}
+```
+
+### [ DELETE ] delete Menbers Event
+* HTTP request : DELETE → /event/deleteMenbers/:idevent
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'members_ids': Array, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete menbers'
+}
+```
+
+### [ DELETE ] delete Moderators Event
+* HTTP request : DELETE → /event/deleteModerators/:idevent
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'moderators_ids': Array, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete Moderators'
+}
+```
+### [ DELETE ] delete Admin Event
+* HTTP request : DELETE → /event/deleteAdmin/:idevent
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'administrators_ids': Array, // Required
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete Admin'
+}
+```
+
+### [ DELETE ] delete Event
+* HTTP request : DELETE → /event/delete/:idevent/user/:iduser
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	code: 201,
+	message: 'Delete event'
+}
+```
+
+### [ GET ] Show Event
+* HTTP request : GET → /event/show/
+
+#### Parameters :
+```javascript
+{
+	null
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	date_start: Date,
+	date_end: Date,
+	location: String, 
+	image: Number,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	groupe_ids: String,
+	conversation_id: String,
+	album_id: String,
+	shopping: Boolean,
+	status: String
+}
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	date_start: Date,
+	date_end: Date,
+	location: String, 
+	image: Number,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	groupe_ids: String,
+	conversation_id: String,
+	album_id: String,
+	shopping: Boolean,
+	status: String
+}
+```
+
+### [ PUT ] Update Event
+* HTTP request : GET → /event/update/:id
+
+#### Parameters :
+```javascript
+{
+	'idsend': String, // Required
+	'name': String, // Optional
+	'description': String, // Optional
+	'date_end': String, // Optional
+	'location': String, // Optional
+	'image': String, // Optional
+	'administrators_ids': Array, // Optional
+	'moderators_ids': Array, // Optional
+	'members_ids': Array, // Optional
+	'groupe_ids': String, // Optional
+	'conversation_id': String, // Optional
+	'album_id': String // Optional
+	'shopping': Boolean // Optional
+	'status': String // Optional
+}
+```
+
+#### Response :
+```javascript
+{
+	_id: Object_ID,
+	name: String,
+	description: String,
+	date_start: Date,
+	date_end: Date,
+	location: String, 
+	image: Number,
+	administrators_ids: Array,
+	moderators_ids: Array,
+	members_ids: Array,
+	groupe_ids: String,
+	conversation_id: String,
+	album_id: String,
+	shopping: Boolean,
+	status: String
+}
+```
